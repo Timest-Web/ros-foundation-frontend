@@ -7,27 +7,21 @@ import * as z from "zod";
 import { ControlledInput } from "@/components/form/input/controlled";
 import { Button } from "@/components/button";
 import { Form } from "react-aria-components";
+import Link from "next/link";
 
 const schema = z.object({
-  firstname: z.string().min(1, "First name is required"),
-  lastname: z.string().min(1, "Last name is required"),
-  phoneNumber: z
-    .string()
-    .min(1, "Phone number is required")
-    .regex(/^\d{10,14}$/, "Invalid phone number"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  email: z.string().min(1, "Email is required").email("Invalid email"),
+  password: z.string().min(1, "Password is required"),
 });
 
 type FormValues = z.infer<typeof schema>;
 
-export default function SignUpForm() {
+export default function SignInForm() {
   const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
     defaultValues: {
-      firstname: "",
-      lastname: "",
-      phoneNumber: "",
+      email: "",
       password: "",
     },
   });
@@ -36,31 +30,17 @@ export default function SignUpForm() {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
-    // TODO: Handle API call or navigation
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <div className="flex space-x-2">
-        <ControlledInput
-          name="firstname"
-          control={control}
-          label="First Name *"
-          type="text"
-        />
-        <ControlledInput
-          name="lastname"
-          control={control}
-          label="Last Name *"
-          type="text"
-        />
-      </div>
       <ControlledInput
-        name="phoneNumber"
+        name="email"
         control={control}
-        label="Phone number *"
+        label="Enter Phone number *"
         type="text"
       />
+
       <ControlledInput
         name="password"
         control={control}
@@ -75,8 +55,13 @@ export default function SignUpForm() {
           </span>
         }
       />
-      
-      <Button type="submit">Create a Beneficiary Account</Button>
+      <div className="font-plus_jakarta_sans text-sm flex space-x-2 justify-end mb-6">
+        <p className="text-text-dark">Lost your password?</p>
+        <Link href={"/"} className="text-primary-100">
+          Let’s recover it
+        </Link>
+      </div>
+      <Button type="submit">Login to your account</Button>
     </Form>
   );
 }
