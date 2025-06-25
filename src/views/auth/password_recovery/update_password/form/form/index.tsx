@@ -33,6 +33,7 @@ export default function UpdatePasswordForm() {
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
@@ -51,7 +52,7 @@ export default function UpdatePasswordForm() {
             onClick={() => setShowPassword(!showPassword)}
             className="text-sm text-primary font-medium cursor-pointer"
           >
-            {showPassword ? "Hide" : "Show"}
+            {showPassword ? "Hide Password" : "Show Password"}
           </span>
         }
       />
@@ -61,6 +62,14 @@ export default function UpdatePasswordForm() {
         label="Re-type password *"
         type={showPassword ? "text" : "password"}
         isRequired
+         rightSlot={
+          <span
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="text-sm text-primary font-medium cursor-pointer"
+          >
+            {showConfirmPassword ? "Hide Password" : "Show Passowrd"}
+          </span>
+        }
       />
       <Button type="submit">Update & Save</Button>
     </Form>
