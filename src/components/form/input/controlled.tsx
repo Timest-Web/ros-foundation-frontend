@@ -49,7 +49,7 @@ export function ControlledInput<T extends FieldValues>({
   return (
     <TextField {...props} className={`w-full ${wrapperClassName}`}>
       {label && (
-        <div className="flex justify-between px-2" >
+        <div className="flex justify-between px-2 mb-2" >
           <Label className="mb-1 text-text-dark block font-medium text-sm font-plus_jakarta_sans">
             {label}
           </Label>
@@ -71,7 +71,7 @@ export function ControlledInput<T extends FieldValues>({
           ref={field.ref}
           className={`w-full border ${
             error ? "border-red-500" : "border-neutral-200"
-          } rounded-sm px-4 py-3 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent ${inputClassName}`}
+          } rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent ${inputClassName}`}
         />
       </div>
 

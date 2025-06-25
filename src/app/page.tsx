@@ -1,8 +1,6 @@
-import SignInView from '@/views/auth/sign_up'
-import React from 'react'
+import SignInView from "@/views/auth/sign_in";
+import React from "react";
 
 export default function Home() {
-  return (
-    <SignInView/>
-  )
+  return <SignInView />;
 }
