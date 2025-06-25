@@ -26,7 +26,7 @@ export default function AuthLayout(props: AuthLayoutProps) {
           alt={props.imageAlt}
         />
       </div>
-      <div className=" px-16 py-6 lg:px-32 lg:pt-16 lg:w-[60%]">
+      <div className=" px-16 py-6 lg:px-32 lg:pt-12 lg:w-[60%]">
         <section>
           {props.otp && (
             <div className="font-ar-one-sans text-lg font-medium text-black mb-4">
