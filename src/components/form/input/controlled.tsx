@@ -70,7 +70,7 @@ export function ControlledInput<T extends FieldValues>({
           name={field.name}
           ref={field.ref}
           className={`w-full border ${
-            error ? "border-red-500" : "border-neutral-200"
+            error ? "border-red-500" : "border-neutral-300"
           } rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent ${inputClassName}`}
         />
       </div>

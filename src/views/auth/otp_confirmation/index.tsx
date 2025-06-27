@@ -36,8 +36,8 @@ export default function OTPConfirmationView() {
             </Link>
           </div>
           <div className="flex justify-center mt-12">
-            <section className="border border-neutral-200 rounded-sm flex space-x-4 p-4 w-[22rem]">
-              <div className="border border-primary-100 bg-neutral-100 w-10 h-10 p-2 rounded-full flex justify-center items-center">
+            <section className="border border-neutral-300 rounded-sm flex space-x-4 p-4 w-[22rem]">
+              <div className="border border-primary-100 bg-neutral-200 w-10 h-10 p-2 rounded-full flex justify-center items-center">
                 <FiPhoneOutgoing className="text-primary-100" />
               </div>
               <div className="space-y-1">

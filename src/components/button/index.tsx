@@ -1,4 +1,4 @@
-
+'use client'
 import {
   Button as AriaButton,
   type ButtonProps,
