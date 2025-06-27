@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AR_One_Sans, Plus_Jakarta_Sans, Righteous } from "next/font/google";
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
 const righteous = Righteous({
   subsets: ["latin"],
