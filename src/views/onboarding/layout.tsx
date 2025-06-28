@@ -1,6 +1,7 @@
 "use client";
 import BoxIcon from "@/components/icons/BoxIcon";
 import FileUpload from "@/components/icons/FileUploadIcon";
+import NotificationIcon from "@/components/icons/NotificationIcon";
 import PayoutIcon from "@/components/icons/PayoutIcon";
 import SettingsIcon from "@/components/icons/SettingsIcon";
 import UserIcon from "@/components/icons/UserIcon";
@@ -8,7 +9,6 @@ import WomenIcon from "@/components/icons/WomenIcon";
 import CustomPopover from "@/components/popover";
 import React from "react";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
-import { MdOutlineMarkEmailUnread } from "react-icons/md";
 
 const menuListItem = [
   { icon: <BoxIcon />, text: "Onboarding" },
@@ -28,7 +28,7 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
     <div>
       <nav className="bg-neutral-100 px-16 py-4 flex justify-end space-x-5 border border-b border-neutral-300">
         <div className="border border-neutral-300 flex justify-between p-2 rounded-md w-[9.5rem] font-plus_jakarta_sans">
-          <MdOutlineMarkEmailUnread className="text-black w-5 h-5" />
+          <NotificationIcon/>
           <p className="text-accent-100 text-sm">Notification</p>
           <p className="text-black text-[0.56rem] font-bold border border-neutral-300 p-1 flex justify-center items-center rounded-full">
             20
@@ -57,7 +57,7 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
         </div>
       </nav>
       <div className="flex">
-        <ul className="h-screen bg-neutral-100 px-8 py-6 w-[20%]">
+        <ul className="h-screen bg-neutral-100 px-8 py-6 w-[30%]">
           {menuListItem.map((menuItem, index) => (
             <div key={index}>
               <MenuItem icon={menuItem.icon} text={menuItem.text} />
