@@ -57,14 +57,14 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
         </div>
       </nav>
       <div className="flex">
-        <ul className="h-screen bg-neutral-100 px-8 py-6 w-[30%]">
+        <div className="h-screen bg-neutral-100 px-8 py-6 w-[18rem] flex-none">
           {menuListItem.map((menuItem, index) => (
             <div key={index}>
               <MenuItem icon={menuItem.icon} text={menuItem.text} />
             </div>
           ))}
-        </ul>
-        <div className="px-16 py-6">{children}</div>
+        </div>
+        <div className="px-16 py-6 flex-1">{children}</div>
       </div>
     </div>
   );

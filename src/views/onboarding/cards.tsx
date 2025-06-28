@@ -1,14 +1,19 @@
+'use client'
+
 import { Button } from "@/components/button";
 import Image, { StaticImageData } from "next/image";
+import { useRouter } from "next/navigation";
 
 interface OnboardingCardProps {
   headingText: string;
   requirementText?: string;
   content: React.ReactNode;
   buttonText: string;
+  pageLink: string;
 }
 
 export function OnboardingCard(props: OnboardingCardProps) {
+  const router = useRouter();
   return (
     <div className="border border-neutral-300 p-4 rounded-md flex flex-col justify-between min-h-[5rem]">
       <div className="flex flex-col gap-4 grow">
@@ -24,7 +29,9 @@ export function OnboardingCard(props: OnboardingCardProps) {
           {props.content}
         </div>
       </div>
-      <Button className="py-2 mt-4">{props.buttonText}</Button>
+      <Button onPress={() => router.push(props.pageLink)} className="py-2 mt-4">
+        {props.buttonText}
+      </Button>
     </div>
   );
 }

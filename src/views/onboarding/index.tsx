@@ -23,6 +23,7 @@ export default function OnboardingView() {
             headingText="What is Next?"
             content="Complete setup for your Beneficiary Account"
             buttonText="Get started"
+            pageLink="/onboarding/what-next"
           />
           <OnboardingCard
             headingText="Second step"
@@ -33,6 +34,7 @@ export default function OnboardingView() {
               </p>
             }
             buttonText="Continue"
+            pageLink="/onboarding"
           />
           <OnboardingCard
             headingText="Third Step?"
@@ -50,6 +52,7 @@ export default function OnboardingView() {
               </div>
             }
             buttonText="Submit for Approval"
+            pageLink="/onboarding"
           />
           <OnboardingCard
             headingText="Business Proposal"
@@ -67,6 +70,7 @@ export default function OnboardingView() {
               </div>
             }
             buttonText="Submit for Approval"
+            pageLink="/onboarding"
           />
         </section>
         <section className="border border-neutral-300 rounded-md px-4 py-8 mt-6">
@@ -106,7 +110,7 @@ export default function OnboardingView() {
               beneficiaryName="Boma John"
               approvalDate="Approved Jan 2025"
             />
-              <BeneficiarySample
+            <BeneficiarySample
               beneficiaryImage={beneficiary}
               beneficiaryName="Boma John"
               approvalDate="Approved Jan 2025"
