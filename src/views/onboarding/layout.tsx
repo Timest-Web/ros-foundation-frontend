@@ -41,7 +41,7 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
           <CustomPopover
             buttonContent={(isOpen) => (
               <div className="flex space-x-3 items-center cursor-pointer">
-                <p className="text-black font-plus_jakarta_sans">Hi, Boma 👋🏽</p>
+                <p className="text-black font-plus_jakarta_sans font-medium">Hi, Boma 👋🏽</p>
                 {isOpen ? (
                   <IoChevronUp className="text-black" />
                 ) : (
@@ -57,14 +57,14 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
         </div>
       </nav>
       <div className="flex">
-        <div className="h-screen bg-neutral-100 px-8 py-6 w-[18rem] flex-none">
+        <div className="bg-neutral-100 px-8 py-6 w-[18rem] flex-none">
           {menuListItem.map((menuItem, index) => (
             <div key={index}>
               <MenuItem icon={menuItem.icon} text={menuItem.text} />
             </div>
           ))}
         </div>
-        <div className="px-16 py-6 flex-1">{children}</div>
+        <div className="px-12 py-6 flex-1">{children}</div>
       </div>
     </div>
   );
