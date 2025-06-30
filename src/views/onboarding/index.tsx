@@ -1,7 +1,10 @@
 import React from "react";
 import OnboardingLayout from "./layout";
 import beneficiary from "../../../public/images/placeholder_beneficiary.jpg";
-import { BeneficiarySample, OnboardingCard } from "./cards";
+import {
+  BeneficiarySample,
+  OnboardingCard,
+} from "./cards";
 
 export default function OnboardingView() {
   return (
@@ -25,6 +28,12 @@ export default function OnboardingView() {
             buttonText="Get started"
             pageLink="/onboarding/what-next"
           />
+          {/* <OnboardingCompletedCard
+            headingText="Boma Dave"
+            content="Your Account step has been completed, you can edit here"
+            buttonText="Get started"
+            pageLink="/onboarding/what-next"
+          /> */}
           <OnboardingCard
             headingText="Second step"
             content={
@@ -34,7 +43,7 @@ export default function OnboardingView() {
               </p>
             }
             buttonText="Continue"
-            pageLink="/onboarding"
+            pageLink="/onboarding/second-step"
           />
           <OnboardingCard
             headingText="Third Step?"

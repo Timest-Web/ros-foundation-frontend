@@ -27,11 +27,10 @@ export default function WhatNextView() {
 
   return (
     <OnboardingLayout>
-      <BackButton />
-      <h3 className="font-righteous text-4xl text-black mt-4">What is Next?</h3>
-      <p className="font-ar-one-sans text-black my-4">
-        Complete setup for your Beneficiary Account
-      </p>
+      <FormHeading
+        headerText="What is Next?"
+        subHeading="Complete setup for your Beneficiary Account"
+      />
       <section className="flex gap-4 mt-4">
         <section>
           <div className="border border-neutral-300 p-4 w-68 h-60 rounded-md flex flex-col gap-3 text-text-dark">
@@ -95,7 +94,7 @@ export default function WhatNextView() {
               onSelect={handleFileSelect}
             >
               <Button className="flex gap-3 items-center text-primary-100 text-xs justify-center border border-neutral-300 p-2 rounded-md w-full font-plus_jakarta_sans mt-2 font-bold">
-                <CloudIcon/>
+                <CloudIcon />
                 Upload Image
               </Button>
             </FileTrigger>
@@ -104,5 +103,26 @@ export default function WhatNextView() {
         <WhatNextForm />
       </section>
     </OnboardingLayout>
+  );
+}
+
+interface FormHeadingProps {
+  headerText: string;
+  subHeading: string;
+  spanText?: string;
+}
+
+export function FormHeading(props: FormHeadingProps) {
+  return (
+    <div>
+      <BackButton />
+      <h3 className="font-righteous text-4xl text-black mt-4">
+        {props.headerText}
+      </h3>
+      <p className="font-ar-one-sans text-black my-4">
+        {props.subHeading} {" "}
+        <span className="text-accent-100">{props.spanText}</span>
+      </p>
+    </div>
   );
 }
