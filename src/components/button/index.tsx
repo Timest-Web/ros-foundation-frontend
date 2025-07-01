@@ -23,7 +23,7 @@ export function Button({
       isDisabled={isPending || props.isDisabled}
       className={({ isPressed, isFocusVisible }) =>
         cn(
-          "px-4 py-4 rounded-sm text-white text-sm w-full font-plus_jakarta_sans bg-primary-100 hover:opacity-70 transition cursor-pointer",
+          "p-4 rounded-sm text-white text-sm w-full font-plus_jakarta_sans bg-primary-100 hover:opacity-70 transition cursor-pointer",
           isPressed && "scale-95",
           isFocusVisible && "outline outline-offset-2 outline-primary-100",
           className

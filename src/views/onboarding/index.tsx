@@ -61,7 +61,7 @@ export default function OnboardingView() {
               </div>
             }
             buttonText="Submit for Approval"
-            pageLink="/onboarding"
+            pageLink="/onboarding/third-step"
           />
           <OnboardingCard
             headingText="Business Proposal"

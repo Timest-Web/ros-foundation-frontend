@@ -60,7 +60,7 @@ export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
         </div>
       </nav>
       <div className="flex">
-        <div className="bg-neutral-100 px-8 py-6 w-[18rem] flex-none">
+        <div className="bg-neutral-100 px-8 py-6 w-[18rem] min-h-screen flex-none">
           {menuListItem.map((menuItem, index) => (
             <div key={index}>
               <MenuItem icon={menuItem.icon} text={menuItem.text} href={menuItem.href} />

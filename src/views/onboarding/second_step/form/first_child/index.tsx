@@ -9,6 +9,18 @@ import { Button } from "@/components/button";
 import { Form } from "react-aria-components";
 import OnboardingFormLayout from "../../../form_layout";
 import { ControlledDateField } from "@/components/form/dateinput";
+import {
+  ControlledSelect,
+  SelectItem,
+} from "@/components/form/select/controlled";
+
+// Sample options for education level
+const options = [
+  { key: "primary", name: "Primary" },
+  { key: "secondary", name: "Secondary" },
+  { key: "tertiary", name: "Tertiary" },
+  { key: "none", name: "None" },
+];
 
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -18,8 +30,8 @@ const schema = z.object({
   stateOfOrigin: z.string().min(1, "State of Origin is required"),
   nationality: z.string().min(1, "Nationality is required"),
   address: z.string().min(1, "Address is required"),
-  education: z.string().min(1, "education level is required"),
-  schoolName: z.string().min(1, "education level is required"),
+  education: z.string().min(1, "Education level is required"),
+  schoolName: z.string().min(1, "School Name is required"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -90,18 +102,24 @@ export default function FirstChildForm() {
           label="Residential Address *"
           type="text"
         />
-        <ControlledInput
+        <ControlledSelect
           name="education"
           control={control}
           label="Education Level *"
-          type="text"
-        />
-       <div className="col-span-2"> <ControlledInput
-          name="schoolName"
-          control={control}
-          label="School Name *"
-          type="text"
-        /></div>
+          items={options}
+          rules={{ required: "Education level is required" }}
+          placeholder="Select Level "
+        >
+          {(item) => <SelectItem id={item.key}>{item.name}</SelectItem>}
+        </ControlledSelect>
+        <div className="col-span-2">
+          <ControlledInput
+            name="schoolName"
+            control={control}
+            label="School Name *"
+            type="text"
+          />
+        </div>
         <div></div>
         <Button className="py-3 mt-2" type="submit">
           Submit
