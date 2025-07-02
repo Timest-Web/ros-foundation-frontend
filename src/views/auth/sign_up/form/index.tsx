@@ -36,7 +36,7 @@ export default function SignUpForm() {
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
-    // TODO: Handle API call or navigation
+
   };
 
   return (
@@ -66,6 +66,7 @@ export default function SignUpForm() {
         control={control}
         label="Password *"
         type={showPassword ? "text" : "password"}
+        placeholder="Hint: Try to use words or characters you can remember always"
         rightSlot={
           <span
             onClick={() => setShowPassword(!showPassword)}

@@ -7,11 +7,12 @@ import Image, { StaticImageData } from "next/image";
 import { useRouter } from "next/navigation";
 
 interface OnboardingCardProps {
-  headingText: string;
+  headingText?: string;
   requirementText?: string;
   content: React.ReactNode;
-  buttonText: string;
+  buttonText?: string;
   pageLink: string;
+  buttonDisplay?: boolean;
 }
 
 export function OnboardingCard(props: OnboardingCardProps) {
@@ -31,9 +32,14 @@ export function OnboardingCard(props: OnboardingCardProps) {
           {props.content}
         </div>
       </div>
-      <Button onPress={() => router.push(props.pageLink)} className="py-2 mt-4">
-        {props.buttonText}
-      </Button>
+      {props.buttonDisplay && (
+        <Button
+          onPress={() => router.push(props.pageLink)}
+          className="py-2 mt-4"
+        >
+          {props.buttonText}
+        </Button>
+      )}
     </div>
   );
 }
@@ -68,7 +74,9 @@ export function OnboardingCompletedCard(props: OnboardingCompletedCardProps) {
       <div className="flex gap-2 mt-2">
         <Button className="py-2">View</Button>
         <Button className="flex justify-center gap-2 py-2 border border-neutral-300 bg-white text-text-dark ">
-         <div className="pt-1"><EditIcon /></div> 
+          <div className="pt-1">
+            <EditIcon />
+          </div>
           Edit
         </Button>
       </div>
@@ -87,14 +95,16 @@ export function BeneficiarySample(props: BeneficiarySampleProps) {
     <div className="flex space-x-2">
       <div className="pt-[0.3rem]">
         <Image
-          className="w-8 h-8 rounded-full"
+          className="w-4 h-4 rounded-full"
           src={props.beneficiaryImage}
           alt="beneficiary"
         />
       </div>
       <div className="text-text-dark">
-        <p className="font-righteous">{props.beneficiaryName}</p>
-        <p className="font-plus_jakarta_sans text-xs">{props.approvalDate}</p>
+        <p className="font-righteous text-xs">{props.beneficiaryName}</p>
+        <p className="font-plus_jakarta_sans text-[0.62rem]">
+          {props.approvalDate}
+        </p>
       </div>
     </div>
   );

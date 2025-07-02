@@ -1,5 +1,5 @@
 import React from "react";
-import OnboardingLayout from "./layout";
+import DashboardLayout from "../layout";
 import beneficiary from "../../../public/images/placeholder_beneficiary.jpg";
 import {
   BeneficiarySample,
@@ -8,7 +8,7 @@ import {
 
 export default function OnboardingView() {
   return (
-    <OnboardingLayout>
+    <DashboardLayout>
       <div>
         <header className="font-righteous text-4xl text-black">
           We’re pleased to have you onboard
@@ -21,12 +21,13 @@ export default function OnboardingView() {
           , Quickly Complete and get your account verified before you can then
           setup your children&apos;s account. We accept maximum of 2 kids
         </p>
-        <section className="mt-6 grid gap-4 grid-cols-2 pr-64">
+        <section className="mt-6 grid gap-4 grid-cols-2 w-[45rem]">
           <OnboardingCard
             headingText="What is Next?"
             content="Complete setup for your Beneficiary Account"
             buttonText="Get started"
             pageLink="/onboarding/what-next"
+            buttonDisplay={true}
           />
           {/* <OnboardingCompletedCard
             headingText="Boma Dave"
@@ -43,7 +44,9 @@ export default function OnboardingView() {
               </p>
             }
             buttonText="Continue"
+            buttonDisplay={true}
             pageLink="/onboarding/second-step"
+
           />
           <OnboardingCard
             headingText="Third Step?"
@@ -61,6 +64,7 @@ export default function OnboardingView() {
               </div>
             }
             buttonText="Submit for Approval"
+            buttonDisplay={true}
             pageLink="/onboarding/third-step"
           />
           <OnboardingCard
@@ -79,10 +83,11 @@ export default function OnboardingView() {
               </div>
             }
             buttonText="Submit for Approval"
-            pageLink="/onboarding"
+            buttonDisplay={true}
+            pageLink="/onboarding/business-proposal"
           />
         </section>
-        <section className="border border-neutral-300 rounded-md px-4 py-8 mt-6">
+        <section className="border border-neutral-300 rounded-md w-[45rem] px-4 py-8 mt-6">
           <h3 className="font-righteous text-text-dark">
             Recent Payout Approvals
           </h3>
@@ -147,6 +152,6 @@ export default function OnboardingView() {
           </section>
         </section>
       </div>
-    </OnboardingLayout>
+    </DashboardLayout>
   );
 }

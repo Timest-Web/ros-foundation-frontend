@@ -7,37 +7,17 @@ import * as z from "zod";
 import { ControlledInput } from "@/components/form/input/controlled";
 import { Button } from "@/components/button";
 import { Form } from "react-aria-components";
-import OnboardingFormLayout from "../../form_layout";
 import { ControlledDateField } from "@/components/form/dateinput";
 import UploadCard from "@/components/cards/profile_upload";
+import OnboardingFormLayout from "@/views/onboarding/form_layout";
+import { OnboardingCard } from "@/views/onboarding/cards";
+import { profileUpdateSchema } from "./schema";
 
-const schema = z.object({
-  file: z
-    .any()
-    .refine(
-      (file) => file instanceof FileList && file.length > 0,
-      "Please upload a document"
-    ),
-  firstname: z.string().min(1, "First name is required"),
-  lastname: z.string().min(1, "Last name is required"),
-  phoneNumber: z
-    .string()
-    .min(1, "Phone number is required")
-    .regex(/^\d{10,14}$/, "Invalid phone number"),
-  email: z.string().email("Invalid email address").optional().or(z.literal("")),
-  dob: z.any().refine((val) => !!val, "Date of Birth is required"),
-  age: z.string().optional(),
-  stateOfOrigin: z.string().min(1, "State of Origin is required"),
-  nationality: z.string().min(1, "Nationality is required"),
-  address: z.string().min(1, "Address is required"),
-  occupation: z.string().min(1, "Occupation is required"),
-});
+type FormValues = z.infer<typeof profileUpdateSchema>;
 
-type FormValues = z.infer<typeof schema>;
-
-export default function WhatNextForm() {
+export default function ProfileForm() {
   const { control, handleSubmit, watch } = useForm<FormValues>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(profileUpdateSchema),
     mode: "onSubmit",
     defaultValues: {
       file: null,
@@ -51,10 +31,13 @@ export default function WhatNextForm() {
       nationality: "",
       address: "",
       occupation: "",
+      oldPassword: "",
+      newPassword: "",
     },
   });
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const fileWatch = watch("file");
 
@@ -76,20 +59,52 @@ export default function WhatNextForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
-      <Controller
-        control={control}
-        name="file"
-        render={({ field }) => (
-          <UploadCard
-            file={previewUrl}
-            onFileChange={field.onChange}
-            headingText="Add a Profile picture"
-            subHeading="Add a Profile picture if you wish, else not so important"
-            acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}
-            isImage={true}
-          />
-        )}
-      />
+      <div className="flex flex-col gap-4">
+        <Controller
+          control={control}
+          name="file"
+          render={({ field }) => (
+            <UploadCard
+              file={previewUrl}
+              onFileChange={field.onChange}
+              headingText="Add a Profile picture"
+              subHeading="Add a Profile picture if you wish, else not so important"
+              acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}
+              isImage={true}
+            />
+          )}
+        />
+        <OnboardingCard
+          headingText="Update your password"
+          pageLink=""
+          content={
+            <div className="flex flex-col gap-3">
+              <ControlledInput
+                name="oldPassword"
+                control={control}
+                label="Old Password *"
+                type={showPassword ? "text" : "password"}
+                placeholder="enter old password"
+                rightSlot={
+                  <span
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-sm text-primary font-medium cursor-pointer"
+                  >
+                    {showPassword ? "Hide Password" : "Show Password"}
+                  </span>
+                }
+              />
+              <ControlledInput
+                name="newPassword"
+                control={control}
+                label="New Password *"
+                type={showPassword ? "text" : "password"}
+                placeholder="enter new password"
+              />
+            </div>
+          }
+        />
+      </div>
       <OnboardingFormLayout
         heading="Account Bio data"
         subHeading="User profile information such as name, age, state of origin and more"
