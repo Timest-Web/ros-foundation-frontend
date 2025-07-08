@@ -12,6 +12,7 @@ interface DocumentUploadCardProps {
   subHeading: string;
   hintText?: string;
   selectField: React.ReactNode;
+  footerText?:boolean;
 }
 
 export default function DocumentUploadCard({
@@ -21,6 +22,7 @@ export default function DocumentUploadCard({
   subHeading,
   hintText,
   selectField,
+  footerText
 }: DocumentUploadCardProps) {
   return (
     <section>
@@ -45,6 +47,11 @@ export default function DocumentUploadCard({
           )}
         </Button>
       </FileTrigger>
+      {footerText && (
+        <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark text-center mt-2">
+          File format: PNG, JPEG, PDF*
+        </p>
+      )}
     </section>
   );
 }

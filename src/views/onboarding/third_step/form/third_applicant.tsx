@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import ProfileImageUpload from "@/components/cards/profile_upload";
 import {
   ControlledSelect,
   SelectItem,
 } from "@/components/form/select/controlled";
 import DocumentUploadCard from "@/components/cards/upload_card";
 import { Button } from "@/components/button";
+import UploadCard from "@/components/cards/profile_upload";
 
 const options = [
   { id: "nin", name: "NIN" },
@@ -55,7 +55,6 @@ export default function ThirdApplicantForm() {
     formData.append("profileImage", data.profileImage);
     formData.append("documentType", data.documentType);
     formData.append("document", data.document);
-
   };
 
   const handleFileSelect = (fileList: FileList | null) => {
@@ -92,11 +91,14 @@ export default function ThirdApplicantForm() {
           name="profileImage"
           control={control}
           render={() => (
-            <ProfileImageUpload
-              image={imagePreview}
-              onImageChange={(fileList) => handleFileSelect(fileList)}
-              headingText="Upload Passport Photograph"
-              subHeading="Clear and precise in white or red background"
+            <UploadCard
+              file={imagePreview}
+              onFileChange={(fileList) => handleFileSelect(fileList)}
+              headingText="Upload Passport photograph"
+              subHeading="Clear and Precise in white or red background"
+              acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
+              isImage={true}
+              footerText={true}
             />
           )}
         />
@@ -107,6 +109,7 @@ export default function ThirdApplicantForm() {
           headingText="Document of Identification"
           subHeading="NIN, Int. Passport, Driver License or Voters card is accepted"
           hintText="Selected type must match attached file"
+          footerText={true}
           selectField={
             <ControlledSelect
               name="documentType"
@@ -121,8 +124,8 @@ export default function ThirdApplicantForm() {
         />
       </div>
 
-      <div className="flex justify-end">
-        <Button type="submit" className="py-2 w-[8.6rem] mt-40">
+      <div className="flex justify-end mt-20">
+        <Button type="submit" className="py-2 w-[8.6rem]">
           Save for User
         </Button>
       </div>

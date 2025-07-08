@@ -13,18 +13,18 @@ import { IoChevronDown, IoChevronUp } from "react-icons/io5";
 
 const menuListItem = [
   { icon: <BoxIcon />, text: "Onboarding", href: "/onboarding" },
-  { icon: <UserIcon />, text: "My Profile", href: "/onboarding" },
+  { icon: <UserIcon />, text: "My Profile", href: "/profile" },
   { icon: <FileUpload />, text: "Uploads", href: "/onboarding" },
   { icon: <WomenIcon />, text: "Children Account", href: "/onboarding" },
   { icon: <PayoutIcon />, text: "Account & Payout", href: "/onboarding" },
   { icon: <SettingsIcon />, text: "Settings", href: "/onboarding" },
 ];
 
-interface OnboardingLayoutProps {
+interface DashboardLayoutProps {
   children: React.ReactNode;
 }
 
-export default function OnboardingLayout({ children }: OnboardingLayoutProps) {
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div>
       <nav className="bg-neutral-100 px-16 py-4 flex justify-end space-x-5 border border-b border-neutral-300">

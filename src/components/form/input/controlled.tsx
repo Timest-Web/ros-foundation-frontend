@@ -25,6 +25,7 @@ interface ControlledInputProps<T extends FieldValues>
   wrapperClassName?: string;
   inputClassName?: string;
   rightSlot?: ReactNode;
+  placeholder?:string
 }
 
 export function ControlledInput<T extends FieldValues>({
@@ -36,6 +37,7 @@ export function ControlledInput<T extends FieldValues>({
   wrapperClassName = "",
   inputClassName = "",
   rightSlot,
+  placeholder,
   ...props
 }: ControlledInputProps<T>) {
   const {
@@ -69,6 +71,7 @@ export function ControlledInput<T extends FieldValues>({
           onBlur={field.onBlur}
           name={field.name}
           ref={field.ref}
+          placeholder={placeholder}
           className={`w-full border ${
             error ? "border-red-500" : "border-neutral-300"
           } rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent ${inputClassName}`}

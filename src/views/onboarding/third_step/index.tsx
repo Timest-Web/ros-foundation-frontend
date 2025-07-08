@@ -1,5 +1,5 @@
 import React from "react";
-import OnboardingLayout from "../layout";
+import DashboardLayout from "../../layout";
 import MainApplicantForm from "./form/main_applicant";
 import { CustomTabs } from "@/components/tabs";
 import SecondApplicantForm from "./form/second_applicant";
@@ -24,8 +24,8 @@ export default function ThirdStepView() {
     },
   ];
   return (
-    <OnboardingLayout>
+    <DashboardLayout>
       <CustomTabs ariaLabel="History of Ancient Rome" tabs={tabData} />
-    </OnboardingLayout>
+    </DashboardLayout>
   );
 }
