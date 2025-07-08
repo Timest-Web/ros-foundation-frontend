@@ -4,6 +4,7 @@ import MainApplicantForm from "./form/main_applicant";
 import { CustomTabs } from "@/components/tabs";
 import SecondApplicantForm from "./form/second_applicant";
 import ThirdApplicantForm from "./form/third_applicant";
+import { FormHeading } from "../what_next";
 
 export default function ThirdStepView() {
   const tabData = [
@@ -25,7 +26,8 @@ export default function ThirdStepView() {
   ];
   return (
     <DashboardLayout>
-      <CustomTabs ariaLabel="History of Ancient Rome" tabs={tabData} />
+      <FormHeading headerText="Third step" subHeading="Upload of documents & Means of Indentification" isBackButton={true}/>
+      <CustomTabs ariaLabel="Users tab" tabs={tabData} />
     </DashboardLayout>
   );
 }

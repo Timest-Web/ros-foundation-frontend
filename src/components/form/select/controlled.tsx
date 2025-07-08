@@ -77,7 +77,7 @@ export function ControlledSelect<
           )}
 
           <Button
-            className={`w-full border border-neutral-300 rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent flex justify-between items-center ${
+            className={`w-full border border-neutral-300 rounded-sm px-4 py-4 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent flex justify-between items-center ${
               error ? "border-red-500" : "border-neutral-300"
             }`}
           >
