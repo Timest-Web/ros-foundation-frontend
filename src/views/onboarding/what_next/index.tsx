@@ -21,13 +21,14 @@ interface FormHeadingProps {
   headerText: string;
   subHeading: string;
   spanText?: string;
+  isBackButton?: boolean;
 }
 
 export function FormHeading(props: FormHeadingProps) {
   return (
     <div>
-      <BackButton />
-      <h3 className="font-righteous text-4xl text-black mt-4">
+      {props.isBackButton && <BackButton />}
+      <h3 className="font-righteous text-4xl text-black">
         {props.headerText}
       </h3>
       <p className="font-ar-one-sans text-black my-4">

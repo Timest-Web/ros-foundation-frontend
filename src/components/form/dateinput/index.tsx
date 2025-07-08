@@ -41,7 +41,7 @@ function CustomDateField<T extends DateValue>({
       <DateInput
         className={`w-full border border-neutral-300 rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent`}
       >
-        {(segment) => <DateSegment segment={segment} />}
+        {(segment) => <DateSegment className={"uppercase"} segment={segment} />}
       </DateInput>
       {description && <Text slot="description">{description}</Text>}
       <FieldError>{errorMessage}</FieldError>

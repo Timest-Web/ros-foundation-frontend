@@ -7,6 +7,7 @@ export default function BusinessProposalView() {
   return (
     <DashboardLayout>
       <FormHeading
+        isBackButton={true}
         headerText="Business Proposal"
         subHeading="Upload a business proposal if you have any Business, although its not compulsory"
       />

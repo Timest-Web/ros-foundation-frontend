@@ -94,7 +94,7 @@ export default function WhatNextForm() {
         heading="Account Bio data"
         subHeading="User profile information such as name, age, state of origin and more"
       >
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-2 gap-2 w-[40rem]">
           <ControlledInput
             name="phoneNumber"
             control={control}
