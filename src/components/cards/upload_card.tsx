@@ -26,7 +26,7 @@ export default function DocumentUploadCard({
 }: DocumentUploadCardProps) {
   return (
     <section>
-      <div className="border border-neutral-300 p-4 w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
+      <div className="border border-neutral-300 p-4 lg:w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
         <h3 className="font-righteous text-text-dark">{headingText}</h3>
         <p className="font-plus_jakarta_sans text-xs">{subHeading}</p>
         {selectField}
@@ -38,7 +38,7 @@ export default function DocumentUploadCard({
       </div>
 
       <FileTrigger onSelect={onFileChange}>
-        <Button className="flex gap-3 bg-white items-center text-primary-100 text-xs justify-center border border-neutral-300 p-2 rounded-md w-72 font-plus_jakarta_sans mt-2 font-bold">
+        <Button className="flex gap-3 bg-white items-center text-primary-100 text-xs justify-center border border-neutral-300 p-2 rounded-md w-full lg:w-72 font-plus_jakarta_sans mt-2 font-bold">
           <AttachIcon />
           {selectedFileName ? (
             <p className="text-xs overflow-hidden">{selectedFileName}</p>
@@ -48,7 +48,7 @@ export default function DocumentUploadCard({
         </Button>
       </FileTrigger>
       {footerText && (
-        <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark text-center mt-2">
+        <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark mt-2">
           File format: PNG, JPEG, PDF*
         </p>
       )}

@@ -51,8 +51,8 @@ export function ControlledInput<T extends FieldValues>({
   return (
     <TextField {...props} className={`w-full ${wrapperClassName}`}>
       {label && (
-        <div className="flex justify-between px-2 mb-2" >
-          <Label className="mb-1 text-text-dark block font-medium text-sm font-plus_jakarta_sans">
+        <div className="flex justify-between px-[0.15rem] lg:px-2 mb-2" >
+          <Label className="mb-1 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
             {label}
           </Label>
           {rightSlot && (
