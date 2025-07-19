@@ -26,8 +26,8 @@ export default function DashboardLayout({
   isNotification,
 }: DashboardLayoutProps) {
   return (
-    <div>
-      <nav className="bg-neutral-100 px-16 py-4 flex justify-end space-x-5 border border-b border-neutral-300">
+    <div className="">
+      <nav className="bg-neutral-100 px-6 lg:px-16 py-4 flex justify-end space-x-2 lg:space-x-5 border border-b border-neutral-300">
         {isNotification && (
           <Link
             href={"/notification"}
@@ -64,8 +64,8 @@ export default function DashboardLayout({
           </CustomPopover>
         </div>
       </nav>
-      <div className="flex">
-        <div className="bg-neutral-100 px-8 py-6 w-[18rem] min-h-screen flex-none">
+      <div className="flex flex-col lg:flex-row">
+        <div className="lg:bg-neutral-100 flex gap-4 px-6 lg:px-8 lg:py-6 lg:w-[18rem] lg:min-h-screen lg:flex-none lg:block">
           {menuItemList.map((menuItem, index) => (
             <div key={index}>
               <MenuItem
@@ -76,7 +76,8 @@ export default function DashboardLayout({
             </div>
           ))}
         </div>
-        <div className="px-12 py-6 flex-1">{children}</div>
+        <hr className="lg:hidden bg-neutral-300"></hr>
+        <div className="px-6 lg:px-12 py-6 lg:flex-1">{children}</div>
       </div>
     </div>
   );
@@ -95,7 +96,7 @@ function MenuItem(props: MenuItemProps) {
   return (
     <Link
       href={props.href}
-      className={`group flex space-x-4 py-4 cursor-pointer items-center 
+      className={`group flex space-x-2 lg:space-x-4 py-4 cursor-pointer items-center 
         ${
           isActive
             ? "text-primary-100 font-extrabold"
@@ -108,11 +109,10 @@ function MenuItem(props: MenuItemProps) {
       >
         {props.icon}
       </div>
-      <p className="font-plus_jakarta_sans font-bold">{props.text}</p>
+      <p className="font-plus_jakarta_sans font-bold text-xs lg:text-base">{props.text}</p>
     </Link>
   );
 }
-
 
 interface FormHeadingProps {
   headerText: string;
@@ -125,11 +125,11 @@ export function FormHeading(props: FormHeadingProps) {
   return (
     <div>
       {props.isBackButton && <BackButton />}
-      <h3 className="font-righteous text-4xl text-black">
+      <h3 className="font-righteous text-2xl lg:text-4xl text-black">
         {props.headerText}
       </h3>
-      <p className="font-ar-one-sans text-black mt-3">
-        {props.subHeading}{" "}
+      <p className="font-ar-one-sans text-black mt-2 lg:mt-3">
+        {props.subHeading}
         <span className="text-accent-100">{props.spanText}</span>
       </p>
     </div>

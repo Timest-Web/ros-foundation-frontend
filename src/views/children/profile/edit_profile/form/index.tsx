@@ -1,20 +1,20 @@
 "use client";
 
 import React from "react";
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ControlledInput } from "@/components/form/input/controlled";
 import { Button } from "@/components/button";
 import { Form } from "react-aria-components";
-import { ControlledDateField } from "@/components/form/dateinput";
-import FormLayout from "../../../form_layout";
 import { EditProfileUpdateSchema } from "./schema";
+import FormLayout from "@/views/form_layout";
+import { ControlledDateField } from "@/components/form/dateinput";
 
 type FormValues = z.infer<typeof EditProfileUpdateSchema>;
 
 export default function EditProfileForm() {
-  const { control, handleSubmit} = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(EditProfileUpdateSchema),
     mode: "onSubmit",
     defaultValues: {
@@ -33,8 +33,6 @@ export default function EditProfileForm() {
       newPassword: "",
     },
   });
-
-
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);

@@ -80,7 +80,7 @@ export default function ProfileDocumentForm() {
             </ControlledSelect>
           }
         />
-        <Button type="submit" className="py-2 mt-6 w-72">
+        <Button type="submit" className="py-2 mt-6 lg:w-72">
           Upload File
         </Button>
       </div>

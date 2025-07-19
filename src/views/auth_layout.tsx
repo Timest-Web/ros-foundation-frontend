@@ -21,14 +21,14 @@ interface AuthLayoutProps {
 export default function AuthLayout(props: AuthLayoutProps) {
   return (
     <main className="flex min-h-screen lg:flex-row flex-col">
-      <div className="lg:w-[40%]">
+      <div className="lg:w-[40%] hidden lg:block">
         <Image
           className="object-cover w-full h-full"
           src={props.displayImage}
           alt={props.imageAlt}
         />
       </div>
-      <div className=" px-16 py-6 lg:px-32 lg:w-[60%]">
+      <div className="px-8 py-6 lg:px-32 lg:w-[60%]">
         <section>
           <div className="flex space-x-2 justify-end mb-8">
             <p className="text-black font-ar-one-sans">
@@ -46,10 +46,10 @@ export default function AuthLayout(props: AuthLayoutProps) {
               {props.otpSubHeader}
             </div>
           )}
-          <div className="font-righteous text-black lg:text-[2.4rem] lg:w-[29rem] leading-tight">
+          <div className="font-righteous text-black text-2xl lg:text-[2.4rem] lg:w-[29rem] leading-tight">
             {props.headerDescription}
           </div>
-          <div className="font-ar-one-sans text-lg font-medium text-black mt-4">
+          <div className="font-ar-one-sans lg:text-lg font-medium text-black mt-4">
             {props.subHeader}
           </div>
         </section>

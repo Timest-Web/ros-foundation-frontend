@@ -176,7 +176,7 @@ export default function UploadCard({
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <div className="border border-neutral-300 p-4 w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
+        <div className="border border-neutral-300 p-4 lg:w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
           <p className="font-righteous">{headingText}</p>
           <p className="font-plus_jakarta_sans text-xs">{subHeading}</p>
 
@@ -233,7 +233,7 @@ export default function UploadCard({
 
         <Button 
           type="submit"
-          className={`flex gap-3 items-center text-xs justify-center border p-2 rounded-md w-72 font-plus_jakarta_sans mt-2 font-bold transition-colors ${
+          className={`flex gap-3 items-center text-xs justify-center border p-2 rounded-md w-full lg:w-72 font-plus_jakarta_sans mt-2 font-bold transition-colors ${
             isUploading 
               ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' 
               : uploadSuccess

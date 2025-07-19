@@ -1,8 +1,8 @@
 import UploadCard from "@/components/cards/profile_upload";
 import React from "react";
-import ChildrenDashboardLayout from "../layout";
 import { FormHeading } from "@/views/layout";
 import EditProfileForm from "./form";
+import ChildrenDashboardLayout from "../../layout";
 
 export default function EditProfileView() {
   return (
@@ -12,7 +12,7 @@ export default function EditProfileView() {
         subHeading="Edit your Profile"
         isBackButton={true}
       />
-      <div className="mt-4 flex gap-4">
+      <div className="mt-4 flex flex-col lg:flex-row gap-4">
         <UploadCard
           headingText="Upload Passport photograph"
           subHeading="Clear and Precise in white or red background"
@@ -20,7 +20,7 @@ export default function EditProfileView() {
           isImage={true}
           footerText={true}
         />
-        <EditProfileForm/>
+        <EditProfileForm />
       </div>
     </ChildrenDashboardLayout>
   );

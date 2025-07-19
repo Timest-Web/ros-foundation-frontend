@@ -13,8 +13,8 @@ export default function ChildrenHomeView() {
         mainHeader="Welcome to your Portal"
         subHeader="Upload school fees receipts or Payment Invoice"
       />
-      <div className="flex gap-6 mt-8">
-        <section className="flex flex-col gap-4">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-6 mt-8">
+        <section className="flex flex-col gap-6 lg:gap-4">
           <DashboardCard
             headingText="Make an Upload"
             content="Upload your school fee receipts or payment invoice"
@@ -65,7 +65,7 @@ export default function ChildrenHomeView() {
           />
         </section>
         <DashboardCard
-         className="w-76"
+         className="lg:w-76"
           headingText="My Uploads"
           content={
             <div>

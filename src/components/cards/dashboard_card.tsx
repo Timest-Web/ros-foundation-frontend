@@ -19,7 +19,7 @@ interface DashboardCardProps {
 export function DashboardCard(props: DashboardCardProps) {
   const router = useRouter();
   return (
-    <div className={`${props.className} border border-neutral-300 p-4 rounded-md flex flex-col justify-between min-h-[5rem]`}>
+    <div className={`${props.className} border border-neutral-300 p-4 rounded-md flex flex-col justify-between min-h-[5rem] shadow-sm`}>
       <div className="flex flex-col gap-4 grow">
         <div className="flex justify-between">
           <h3 className="font-righteous text-text-dark">{props.headingText}</h3>

@@ -58,10 +58,10 @@ interface DashboardHeaderProps {
 export function DashboardHeader(props: DashboardHeaderProps) {
   return (
     <div>
-      <header className="font-righteous text-4xl text-black">
+      <header className="font-righteous text-3xl lg:text-4xl text-black">
         {props.mainHeader}
       </header>
-      <p className="font-ar-one-sans text-black mt-3 lg:w-[52rem]">
+      <p className="font-ar-one-sans text-sm lg:text-base text-black mt-3 lg:w-[52rem]">
         {props.subHeader}
       </p>
     </div>
