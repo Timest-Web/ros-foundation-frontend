@@ -48,7 +48,7 @@ export default function DocumentUploadCard({
         </Button>
       </FileTrigger>
       {footerText && (
-        <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark text-center mt-2">
+        <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark mt-2">
           File format: PNG, JPEG, PDF*
         </p>
       )}
