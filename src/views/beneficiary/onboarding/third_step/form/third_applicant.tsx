@@ -45,7 +45,6 @@ export default function ThirdApplicantForm() {
     },
   });
 
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [documentNames, setDocumentNames] = useState<string[]>([]);
 
   const onSubmit = (data: MainApplicantFormData) => {
@@ -57,20 +56,7 @@ export default function ThirdApplicantForm() {
     formData.append("document", data.document);
   };
 
-  const handleFileSelect = (fileList: FileList | null) => {
-    if (fileList && fileList.length > 0) {
-      const file = fileList[0];
-      setValue("profileImage", file, { shouldValidate: true });
 
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result && typeof event.target.result === "string") {
-          setImagePreview(event.target.result);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const handleDocumentSelect = (fileList: FileList | null) => {
     if (fileList && fileList.length > 0) {
@@ -92,8 +78,6 @@ export default function ThirdApplicantForm() {
           control={control}
           render={() => (
             <UploadCard
-              file={imagePreview}
-              onFileChange={(fileList) => handleFileSelect(fileList)}
               headingText="Upload Passport photograph"
               subHeading="Clear and Precise in white or red background"
               acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}

@@ -40,10 +40,8 @@ export default function BusinessProposalForm() {
       <Controller
         control={control}
         name="file"
-        render={({ field }) => (
+        render={({ }) => (
           <UploadCard
-            file={field.value?.[0]?.name ?? null}
-            onFileChange={field.onChange}
             headingText="Proposal Document"
             subHeading=""
             footerText={true}

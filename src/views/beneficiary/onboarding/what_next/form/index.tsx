@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -36,7 +36,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function WhatNextForm() {
-  const { control, handleSubmit, watch } = useForm<FormValues>({
+  const { control, handleSubmit} = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
     defaultValues: {
@@ -54,21 +54,7 @@ export default function WhatNextForm() {
     },
   });
 
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const fileWatch = watch("file");
-
-  useEffect(() => {
-    if (fileWatch instanceof FileList && fileWatch.length > 0) {
-      const file = fileWatch[0];
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-
-      return () => URL.revokeObjectURL(url);
-    } else {
-      setPreviewUrl(null);
-    }
-  }, [fileWatch]);
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
@@ -79,10 +65,8 @@ export default function WhatNextForm() {
       <Controller
         control={control}
         name="file"
-        render={({ field }) => (
+        render={({}) => (
           <UploadCard
-            file={previewUrl}
-            onFileChange={field.onChange}
             headingText="Add a Profile picture"
             subHeading="Add a Profile picture if you wish, else not so important"
             acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}

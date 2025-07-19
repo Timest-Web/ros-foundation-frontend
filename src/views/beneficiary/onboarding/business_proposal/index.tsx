@@ -1,7 +1,7 @@
 import React from "react";
 import BeneficiaryDashboardLayout from "../../layout";
-import { FormHeading } from "../what_next";
 import BusinessProposalForm from "./form";
+import { FormHeading } from "@/views/layout";
 
 export default function BusinessProposalView() {
   return (
