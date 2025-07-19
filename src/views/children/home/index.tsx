@@ -60,7 +60,7 @@ export default function ChildrenHomeView() {
               </div>
             }
             buttonText="View Profile"
-            pageLink="/onboarding/what-next"
+            pageLink="/children/profile"
             buttonDisplay={true}
           />
         </section>
@@ -86,7 +86,7 @@ export default function ChildrenHomeView() {
             </div>
           }
           buttonText="Get started"
-          pageLink="/onboarding/what-next"
+          pageLink="/children/uploads"
           buttonDisplay={true}
         />
       </div>
