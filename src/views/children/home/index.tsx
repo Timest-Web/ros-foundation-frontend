@@ -1,3 +1,5 @@
+'use client';
+
 import React from "react";
 import ChildrenDashboardLayout from "../layout";
 import { DashboardHeader } from "@/views/beneficiary/layout";
@@ -6,14 +8,17 @@ import avatar from "../../../../public/images/another_placeholder.jpg";
 import Image from "next/image";
 import AttachIcon from "@/components/icons/AttachIcon";
 
+
 export default function ChildrenHomeView() {
+
+
   return (
     <ChildrenDashboardLayout>
       <DashboardHeader
         mainHeader="Welcome to your Portal"
         subHeader="Upload school fees receipts or Payment Invoice"
       />
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-6 mt-8">
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-6 mt-7">
         <section className="flex flex-col gap-6 lg:gap-4">
           <DashboardCard
             headingText="Make an Upload"
