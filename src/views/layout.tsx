@@ -7,6 +7,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { IoChevronDown, IoChevronUp } from "react-icons/io5";
+import { useSession, signOut } from "next-auth/react";
+import DashboardSkeleton from "@/components/skeleton/dashboard";
 
 interface MenuItemProps {
   icon: React.ReactNode;
@@ -25,6 +27,12 @@ export default function DashboardLayout({
   menuItemList,
   isNotification,
 }: DashboardLayoutProps) {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <DashboardSkeleton />;
+  }
+
   return (
     <div className="">
       <nav className="bg-neutral-100 px-6 lg:px-16 py-4 flex justify-end space-x-2 lg:space-x-5 border border-b border-neutral-300">
@@ -48,7 +56,7 @@ export default function DashboardLayout({
             buttonContent={(isOpen) => (
               <div className="flex space-x-3 items-center cursor-pointer">
                 <p className="text-black font-plus_jakarta_sans font-medium">
-                  Hi, Boma 👋🏽
+                  Hi, {session?.user?.name} 👋🏽
                 </p>
                 {isOpen ? (
                   <IoChevronUp className="text-black" />
@@ -59,7 +67,9 @@ export default function DashboardLayout({
             )}
           >
             <div className="w-16 h-16 p-2 bg-white shadow-2xl">
-              <p className="text-black">Log out</p>
+              <p onClick={() => signOut()} className="text-black">
+                Log out
+              </p>
             </div>
           </CustomPopover>
         </div>
@@ -109,7 +119,9 @@ function MenuItem(props: MenuItemProps) {
       >
         {props.icon}
       </div>
-      <p className="font-plus_jakarta_sans font-bold text-xs lg:text-base">{props.text}</p>
+      <p className="font-plus_jakarta_sans font-bold text-xs lg:text-base">
+        {props.text}
+      </p>
     </Link>
   );
 }
