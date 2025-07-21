@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { AR_One_Sans, Plus_Jakarta_Sans, Righteous } from "next/font/google";
 import "@/styles/globals.css";
+import Providers from "./providers";
 
 const righteous = Righteous({
   subsets: ["latin"],
@@ -31,13 +32,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${righteous.variable} ${ar_one_sans.variable} ${plus_jakarta_sans.variable}`}
-    >
-      <body>
-        <main>{children}</main>
-      </body>
-    </html>
+    <Providers>
+      <html
+        lang="en"
+        className={`${righteous.variable} ${ar_one_sans.variable} ${plus_jakarta_sans.variable}`}
+      >
+        <body>
+          <main>{children}</main>
+        </body>
+      </html>
+    </Providers>
   );
 }
