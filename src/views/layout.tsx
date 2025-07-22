@@ -67,7 +67,10 @@ export default function DashboardLayout({
             )}
           >
             <div className="w-32 h-12 p-3 rounded-md bg-white shadow-lg">
-              <button onClick={() => signOut()} className="text-black cursor-pointer">
+              <button
+                onClick={() => signOut()}
+                className="text-black cursor-pointer"
+              >
                 Log out
               </button>
             </div>
@@ -101,7 +104,7 @@ interface MenuItemProps {
 
 function MenuItem(props: MenuItemProps) {
   const pathname = usePathname();
-  const isActive = pathname === props.href;
+  const isActive = pathname === props.href || pathname.startsWith(props.href);
 
   return (
     <Link
@@ -135,7 +138,7 @@ interface FormHeadingProps {
 
 export function FormHeading(props: FormHeadingProps) {
   return (
-    <div>
+    <div className="mb-6">
       {props.isBackButton && <BackButton />}
       <h3 className="font-righteous text-2xl lg:text-4xl text-black">
         {props.headerText}

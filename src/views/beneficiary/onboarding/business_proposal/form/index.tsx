@@ -54,6 +54,7 @@ export default function BusinessProposalForm() {
               "image/jpeg",
             ]}
             isImage={false}
+            formats="PNG, JPEG, PDF*, File must be less than 2mb"
           />
         )}
       />

@@ -24,7 +24,7 @@ export default function OnboardingView() {
             headingText="What is Next?"
             content="Complete setup for your Beneficiary Account"
             buttonText="Get started"
-            pageLink="/onboarding/what-next"
+            pageLink="/beneficiary/onboarding/what-next"
             buttonDisplay={true}
           />
           {/* <OnboardingCompletedCard
@@ -43,7 +43,7 @@ export default function OnboardingView() {
             }
             buttonText="Continue"
             buttonDisplay={true}
-            pageLink="/onboarding/second-step"
+            pageLink="/beneficiary/onboarding/second-step"
 
           />
           <DashboardCard
@@ -63,7 +63,7 @@ export default function OnboardingView() {
             }
             buttonText="Submit for Approval"
             buttonDisplay={true}
-            pageLink="/onboarding/third-step"
+            pageLink="/beneficiary/onboarding/third-step"
           />
           <DashboardCard
             headingText="Business Proposal"
@@ -82,7 +82,7 @@ export default function OnboardingView() {
             }
             buttonText="Submit for Approval"
             buttonDisplay={true}
-            pageLink="/onboarding/business-proposal"
+            pageLink="/beneficiary/onboarding/business-proposal"
           />
         </section>
         <section className="border border-neutral-300 rounded-md w-[45rem] px-4 py-8 mt-6">

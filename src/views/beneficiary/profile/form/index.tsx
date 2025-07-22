@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ControlledInput } from "@/components/form/input/controlled";
@@ -11,11 +11,12 @@ import { ControlledDateField } from "@/components/form/dateinput";
 import { profileUpdateSchema } from "./schema";
 import { DashboardCard } from "@/components/cards/dashboard_card";
 import FormLayout from "../../../form_layout";
+import UploadCard from "@/components/cards/profile_upload";
 
 type FormValues = z.infer<typeof profileUpdateSchema>;
 
 export default function ProfileForm() {
-  const { control, handleSubmit} = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(profileUpdateSchema),
     mode: "onSubmit",
     defaultValues: {
@@ -35,9 +36,7 @@ export default function ProfileForm() {
     },
   });
 
-
   const [showPassword, setShowPassword] = useState(false);
-
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
@@ -46,6 +45,13 @@ export default function ProfileForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
       <div className="flex flex-col gap-4">
+        <UploadCard
+          apiEndpoint=""
+          headingText="Add a Profile picture"
+          subHeading="Add a Profile picture if you wish, else not so important"
+          acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}
+          isImage={true}
+        />
         <DashboardCard
           headingText="Update your password"
           pageLink=""

@@ -11,6 +11,7 @@ export default function SecondStepView() {
         headerText="Second step"
         subHeading="Create your Kids Account,"
         spanText="Maximum of 2"
+        isBackButton={true}
       />
       <SecondStepForm />
     </BeneficiaryDashboardLayout>

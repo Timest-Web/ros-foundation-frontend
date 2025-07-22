@@ -76,6 +76,7 @@ export default function MainApplicantForm() {
           acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
           isImage={true}
           footerText={true}
+          formats="PNG, JPEG, PDF*, File must be less than 2mb"
         />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DocumentUploadCard
