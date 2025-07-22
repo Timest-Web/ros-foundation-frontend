@@ -9,7 +9,8 @@ import { Button } from "@/components/button";
 import { Form } from "react-aria-components";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import RecoverPasswordLink from "@/components/extras/additional_form_info";
+import AdditionalFormInfoLink from "@/components/extras/additional_form_info";
+
 
 const schema = z.object({
   phone: z.string().min(1, "Phone Number is required"),
@@ -71,7 +72,7 @@ export default function BeneficiarySignInForm() {
           </span>
         }
       />
-     <RecoverPasswordLink href="/"/>
+     <AdditionalFormInfoLink text="Lost your password?" href="/beneficiary/password-recovery" linkText="Let’s recover it "/>
       {errorMessage && (
         <p className="text-red-500 font-plus_jakarta_sans text-sm font-semibold">
           {errorMessage}
