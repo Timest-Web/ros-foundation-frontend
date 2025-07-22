@@ -22,7 +22,7 @@ export default function ChildrenSignInForm() {
   const router = useRouter();
   const [errorMessage, setErrorMessage] = useState("");
 
-  const { control, handleSubmit, reset } = useForm<FormValues>({
+  const { control, handleSubmit, reset, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
     defaultValues: {
@@ -76,7 +76,7 @@ export default function ChildrenSignInForm() {
         type="text"
       />
        {errorMessage && <p className="text-red-500 font-plus_jakarta_sans text-sm font-semibold">{errorMessage}</p>}
-      <Button type="submit" className="mt-4">
+      <Button isPending={formState.isSubmitting} type="submit" className="mt-4">
         Login to Portal
       </Button>
     </Form>

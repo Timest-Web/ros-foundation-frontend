@@ -1,8 +1,5 @@
-'use client'
-import {
-  Button as AriaButton,
-  type ButtonProps,
-} from "react-aria-components";
+"use client";
+import { Button as AriaButton, type ButtonProps } from "react-aria-components";
 import { cn } from "@/lib/utils";
 import { Loader } from "../loader";
 
@@ -30,7 +27,13 @@ export function Button({
         )
       }
     >
-      {isPending ? <Loader /> : children}
+      {isPending ? (
+        <div className="flex justify-center">
+          <Loader />
+        </div>
+      ) : (
+        children
+      )}
     </AriaButton>
   );
 }

@@ -13,7 +13,7 @@ const users = [
   {
     id: "2",
     name: "Beneficiary User",
-    email: "ben@test.com",
+    phone: "08010002000",
     password: "password",
     role: "beneficiary",
   },
@@ -57,18 +57,18 @@ export const authOptions: NextAuthOptions = {
       id: "beneficiary-credentials",
       name: "Beneficiary Credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
+        phone: { label: "Phone", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         const user = users.find(
-          (u) => u.email === credentials?.email && u.role === "beneficiary"
+          (u) => u.phone === credentials?.phone && u.role === "beneficiary"
         );
         if (user && user.password === credentials?.password) {
           return {
             id: user.id,
             name: user.name,
-            email: user.email,
+            phone: user.phone,
             role: user.role,
           };
         }

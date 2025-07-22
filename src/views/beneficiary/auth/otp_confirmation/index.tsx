@@ -1,9 +1,10 @@
 import React from "react";
 import mother_and_child from "../../../../../public/images/mum_posing_with-daughter.jpg";
-import Link from "next/link";
 import { FiPhoneOutgoing } from "react-icons/fi";
 import AuthLayout from "@/views/auth_layout";
 import BeneficiaryOTPForm from "./form";
+import OTPTimer from "@/components/extras/otp_timer";
+import OTPInfo from "@/components/extras/otp_info";
 
 export default function BeneficiaryOTPConfirmationView() {
   return (
@@ -12,29 +13,11 @@ export default function BeneficiaryOTPConfirmationView() {
       imageAlt="mother_and_child"
       headerDescription="Enter OTP Code"
       otp={true}
-      otpSubHeader={
-        <p>
-          We sent a 6 digit sms otp code to
-          <span className="text-primary-100">+234 818 248 494</span>
-        </p>
-      }
+      otpSubHeader={<OTPInfo />}
       sectionForm={<BeneficiaryOTPForm />}
       otpFooter={
         <main>
-          <div className="flex justify-between  mt-6">
-            <div className="flex space-x-2">
-              <p className="text-black font-ar-one-sans">6:00</p>
-              <p className="text-black font-ar-one-sans">
-                I didn’t receive OTP code
-              </p>
-            </div>
-            <Link
-              href={"/"}
-              className="text-primary-100 font-plus_jakarta_sans items-end"
-            >
-              Resend Here
-            </Link>
-          </div>
+          <OTPTimer />
           <div className="flex justify-center mt-12">
             <section className="border border-neutral-300 rounded-sm flex space-x-4 p-4 w-[22rem]">
               <div className="border border-primary-100 bg-neutral-200 w-10 h-10 p-2 rounded-full flex justify-center items-center">

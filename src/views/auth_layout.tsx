@@ -72,3 +72,15 @@ export default function AuthLayout(props: AuthLayoutProps) {
     </main>
   );
 }
+
+interface FormErrorProps {
+  errorMessage?: string;
+}
+
+export function FormError({ errorMessage }: FormErrorProps) {
+  return (
+    <p className="text-red-500 font-plus_jakarta_sans text-sm font-semibold">
+      {errorMessage}
+    </p>
+  );
+}
