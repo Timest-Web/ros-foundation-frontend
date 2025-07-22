@@ -9,55 +9,54 @@ import { Button } from "@/components/button";
 import { Form } from "react-aria-components";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FormError } from "@/views/auth_layout";
 import AdditionalFormInfoLink from "@/components/extras/additional_form_info";
 
-
 const schema = z.object({
-  phone: z.string().min(1, "Phone Number is required"),
+  email: z.string().min(1, "Email is required"),
   password: z.string().min(1, "Password is required"),
 });
 
 type FormValues = z.infer<typeof schema>;
 
-export default function BeneficiarySignInForm() {
-  const { control, handleSubmit, formState } = useForm<FormValues>({
+export default function EnrollerSignInForm() {
+  const router = useRouter();
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const { control, handleSubmit, reset, formState } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
     defaultValues: {
-      phone: "",
+      email: "",
       password: "",
     },
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState("");
-
-  const onSubmit: SubmitHandler<FormValues> = async ({ phone, password }) => {
-    // console.log("Submitted data:", data);
-
-    const res = await signIn("beneficiary-credentials", {
+  const onSubmit: SubmitHandler<FormValues> = async ({ email, password }) => {
+    const res = await signIn("children-credentials", {
       redirect: false,
-      phone,
+      email,
       password,
     });
 
     if (res?.ok) {
-      router.push("/beneficiary/onboarding");
+      router.push("/children");
     } else {
       setErrorMessage("Invalid credentials. Please try again.");
     }
+
+    reset();
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <Form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-10">
       <ControlledInput
-        name="phone"
+        name="email"
         control={control}
-        label="Enter Phone number *"
-        type="text"
+        label="Enter your  Work Email"
+        type="email"
       />
-
       <ControlledInput
         name="password"
         control={control}
@@ -72,13 +71,16 @@ export default function BeneficiarySignInForm() {
           </span>
         }
       />
-     <AdditionalFormInfoLink text="Lost your password?" href="/beneficiary/password-recovery" linkText="Let’s recover it "/>
-      {errorMessage && (
-        <p className="text-red-500 font-plus_jakarta_sans text-sm font-semibold">
-          {errorMessage}
-        </p>
-      )}
-      <Button isPending={formState.isSubmitting} type="submit">Login to your account</Button>
+      {errorMessage && <FormError errorMessage={errorMessage} />}
+      <AdditionalFormInfoLink
+        text="Lost your password?"
+        linkText="Let’s recover it "
+        href=""
+        className="justify-end"
+      />
+      <Button isPending={formState.isSubmitting} type="submit" className="mt-2">
+        Login to your account
+      </Button>
     </Form>
   );
 }

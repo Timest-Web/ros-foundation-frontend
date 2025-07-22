@@ -3,15 +3,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { Button, FileTrigger } from "react-aria-components";
 import Camera from "@/components/icons/Camera";
 import CloudIcon from "@/components/icons/CloudIcon";
 import AttachIcon from "../icons/AttachIcon";
 
-interface UploadFormData {
-  file: FileList | null;
-}
+// Removed UploadFormData as it's no longer needed
 
 interface UploadCardProps {
   headingText: string;
@@ -19,12 +16,13 @@ interface UploadCardProps {
   acceptedFileTypes: string[];
   isImage?: boolean;
   footerText?: boolean;
-  onUpload?: (file: File, formData?: UploadFormData) => Promise<void>;
+  onUpload?: (file: File) => Promise<void>;
   apiEndpoint?: string;
-  name?: string; // Field name for react-hook-form
   required?: boolean;
   maxFileSize?: number; // in bytes
-  onFormChange?: (formData: UploadFormData) => void;
+  // Renamed onFormChange to onFileChange for clarity
+  onFileChange?: (file: File | null) => void;
+  formats?:string;
 }
 
 export default function UploadCard({
@@ -35,42 +33,26 @@ export default function UploadCard({
   footerText,
   onUpload,
   apiEndpoint,
-  name = "file",
   required = false,
   maxFileSize = 5 * 1024 * 1024, // 5MB default
-  onFormChange,
+  onFileChange,
+  formats
 }: UploadCardProps) {
+  // State for component status
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadSuccess, setUploadSuccess] = useState(false);
+
+  // State for file management, replacing react-hook-form
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  const {
-    control,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors },
-    setError,
-    clearErrors,
-  } = useForm<UploadFormData>({
-    defaultValues: {
-      file: null,
-    },
-  });
-
-  const watchedFile = watch("file");
-
-  // File validation function
-  const validateFile = (fileList: FileList | null) => {
-    if (!fileList || fileList.length === 0) {
-      if (required) {
-        return "File is required";
-      }
-      return true;
+  // File validation function (now takes a single File or null)
+  const validateFile = (file: File | null): string | null => {
+    if (!file) {
+      return required ? "File is required" : null;
     }
-
-    const file = fileList[0];
 
     // Check file size
     if (file.size > maxFileSize) {
@@ -79,73 +61,78 @@ export default function UploadCard({
 
     // Check file type
     const fileExtension = file.name.split('.').pop()?.toLowerCase();
-    const acceptedExtensions = acceptedFileTypes.map(type => 
+    const acceptedExtensions = acceptedFileTypes.map(type =>
       type.startsWith('.') ? type.slice(1).toLowerCase() : type.toLowerCase()
     );
 
-    if (!acceptedExtensions.includes(fileExtension || '')) {
-      return `File type must be one of: ${acceptedFileTypes.join(', ')}`;
+    if (!fileExtension || !acceptedExtensions.includes(fileExtension)) {
+        return `File type must be one of: ${acceptedFileTypes.join(', ')}`;
     }
 
-    return true;
+    return null; // No error
+  };
+
+  // Handler for when a file is selected from the FileTrigger
+  const handleFileSelect = (fileList: FileList | null) => {
+    const file = fileList?.[0] || null;
+
+    // Reset previous states
+    setUploadError(null);
+    setUploadSuccess(false);
+    
+    // Validate the new file
+    const error = validateFile(file);
+    if (error) {
+      setValidationError(error);
+      setSelectedFile(null); // Clear the file if it's invalid
+    } else {
+      setValidationError(null);
+      setSelectedFile(file);
+    }
   };
 
   // Update preview when file changes
   useEffect(() => {
-    if (watchedFile && watchedFile.length > 0) {
-      const file = watchedFile[0];
-      
-      if (isImage && file.type.startsWith('image/')) {
-        const url = URL.createObjectURL(file);
-        setPreviewUrl(url);
-        
-        // Cleanup previous URL
-        return () => {
-          if (previewUrl) {
-            URL.revokeObjectURL(previewUrl);
-          }
-        };
-      } else {
-        setPreviewUrl(null);
-      }
+    let objectUrl: string | null = null;
+    if (selectedFile && isImage && selectedFile.type.startsWith('image/')) {
+        objectUrl = URL.createObjectURL(selectedFile);
+        setPreviewUrl(objectUrl);
     } else {
-      setPreviewUrl(null);
+        setPreviewUrl(null);
     }
-  }, [watchedFile, isImage]);
 
-  // Call onFormChange when form data changes
+    // Cleanup function to revoke the object URL
+    return () => {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+      }
+    };
+  }, [selectedFile, isImage]);
+
+  // Call onFileChange when the selected file changes
   useEffect(() => {
-    if (onFormChange) {
-      onFormChange({ file: watchedFile });
+    if (onFileChange) {
+      onFileChange(selectedFile);
     }
-  }, [watchedFile, onFormChange]);
+  }, [selectedFile, onFileChange]);
 
-  const handleFileChange = (fileList: FileList | null) => {
-    setValue("file", fileList);
-    clearErrors("file");
-    setUploadError(null);
-    setUploadSuccess(false);
-  };
-
-  const onSubmit = async (data: UploadFormData) => {
-    if (!data.file || data.file.length === 0) {
-      setError("file", { message: "Please select a file" });
+  // Handler for the upload button click
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      setValidationError("Please select a file to upload.");
       return;
     }
 
-    const file = data.file[0];
     setIsUploading(true);
     setUploadError(null);
     setUploadSuccess(false);
 
     try {
       if (onUpload) {
-        // Use custom upload handler
-        await onUpload(file, data);
+        await onUpload(selectedFile);
       } else if (apiEndpoint) {
-        // Default upload implementation
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('file', selectedFile);
 
         const response = await fetch(apiEndpoint, {
           method: 'POST',
@@ -171,92 +158,85 @@ export default function UploadCard({
     }
   };
 
-  const selectedFile = watchedFile && watchedFile.length > 0 ? watchedFile[0] : null;
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    // Replaced <form> with a <div>
+    <div>
       <div>
         <div className="border border-neutral-300 p-4 lg:w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
           <p className="font-righteous">{headingText}</p>
           <p className="font-plus_jakarta_sans text-xs">{subHeading}</p>
 
           <div className="flex flex-col items-center justify-center">
-            <Controller
-              name="file"
-              control={control}
-              rules={{
-                validate: validateFile
-              }}
-              render={({ }) => (
-                <FileTrigger
-                  acceptedFileTypes={acceptedFileTypes}
-                  onSelect={handleFileChange}
-                >
-                  <Button className="flex flex-col items-center">
-                    <div className="border border-neutral-300 w-20 h-20 rounded-full flex justify-center items-center overflow-hidden relative">
-                      {selectedFile ? (
-                        isImage && previewUrl ? (
-                          <img
-                            src={previewUrl}
-                            alt="Preview"
-                            className="w-full h-full object-cover rounded-full"
-                          />
-                        ) : (
-                          <p className="text-xs text-center px-2 break-all">
-                            {selectedFile.name}
-                          </p>
-                        )
-                      ) : isImage ? (
-                        <Camera />
-                      ) : (
-                        <AttachIcon />
-                      )}
-                    </div>
-                    {!selectedFile && (
-                      <p className="font-plus_jakarta_sans font-semibold text-xs mt-4">
-                        Click to Add
+            {/* Removed Controller wrapper */}
+            <FileTrigger
+              acceptedFileTypes={acceptedFileTypes}
+              onSelect={handleFileSelect}
+            >
+              <Button className="flex flex-col items-center">
+                <div className="border border-neutral-300 w-20 h-20 rounded-full flex justify-center items-center overflow-hidden relative">
+                  {selectedFile ? (
+                    isImage && previewUrl ? (
+                      <img
+                        src={previewUrl}
+                        alt="Preview"
+                        className="w-full h-full object-cover rounded-full"
+                      />
+                    ) : (
+                      <p className="text-xs text-center px-2 break-all">
+                        {selectedFile.name}
                       </p>
-                    )}
-                  </Button>
-                </FileTrigger>
-              )}
-            />
+                    )
+                  ) : isImage ? (
+                    <Camera />
+                  ) : (
+                    <AttachIcon />
+                  )}
+                </div>
+                {!selectedFile && (
+                  <p className="font-plus_jakarta_sans font-semibold text-xs mt-4">
+                    Click to Add
+                  </p>
+                )}
+              </Button>
+            </FileTrigger>
           </div>
 
-          {/* Display validation errors */}
-          {errors.file && (
+          {/* Display validation errors from state */}
+          {validationError && (
             <p className="font-plus_jakarta_sans text-xs text-red-600 text-center">
-              {errors.file.message}
+              {validationError}
             </p>
           )}
         </div>
 
-        <Button 
-          type="submit"
+        <Button
+          type="button" // Changed from "submit" to "button"
+          onClick={handleUpload} // Added onClick handler
           className={`flex gap-3 items-center text-xs justify-center border p-2 rounded-md w-full lg:w-72 font-plus_jakarta_sans mt-2 font-bold transition-colors ${
-            isUploading 
-              ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed' 
+            isUploading
+              ? 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
               : uploadSuccess
               ? 'bg-green-50 text-green-700 border-green-300'
-              : uploadError
+              : uploadError || validationError
               ? 'bg-red-50 text-red-700 border-red-300'
               : 'text-primary-100 border-neutral-300 hover:bg-gray-50'
           }`}
-          isDisabled={isUploading}
+          // Updated isDisabled logic
+          isDisabled={isUploading || !selectedFile || !!validationError}
         >
           <CloudIcon />
-          {isUploading 
-            ? 'Uploading...' 
-            : uploadSuccess 
-            ? 'Uploaded!' 
-            : uploadError 
-            ? 'Upload Failed' 
+          {isUploading
+            ? 'Uploading...'
+            : uploadSuccess
+            ? 'Uploaded!'
+            : uploadError || validationError
+            ? 'Upload Failed'
             : (isImage ? "Upload Image" : "Upload Document")
           }
         </Button>
 
-        {/* Display upload errors */}
-        {uploadError && (
+        {/* Display upload errors (separate from validation errors) */}
+        {uploadError && !validationError && (
           <div className="flex justify-center w-72">
             <p className="font-plus_jakarta_sans text-xs text-red-600 text-center mt-1">
               {uploadError}
@@ -267,11 +247,11 @@ export default function UploadCard({
         {footerText && (
           <div className="flex justify-center w-72">
             <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark text-center mt-2">
-              File format: PNG, JPEG, PDF*
+              File format: {formats}
             </p>
           </div>
         )}
       </div>
-    </form>
+    </div>
   );
 }
