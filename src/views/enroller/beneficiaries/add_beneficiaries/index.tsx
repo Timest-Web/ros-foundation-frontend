@@ -16,7 +16,7 @@ export default function EnrollerAddBeneficiariesView() {
           content={<p>Create Parent Account</p>}
           buttonDisplay={true}
           buttonText="Get started"
-          pageLink="/"
+          pageLink="/enroller/beneficiaries/add-beneficiaries/add-parent"
         />
         <DashboardCard
           headingText="Second step"

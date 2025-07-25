@@ -1,10 +1,10 @@
 import EnrollerDashboardLayout from "@/views/enroller/layout";
 import { FormHeading } from "@/views/layout";
 import React from "react";
-import NextStepForm from "./form";
 import ProfileCard from "@/views/beneficiary/children_account/profile_card";
+import AddParentNextStepForm from "./form";
 
-export default function NextStepView() {
+export default function AddParentNextStepView() {
   return (
     <EnrollerDashboardLayout>
       <FormHeading
@@ -13,7 +13,7 @@ export default function NextStepView() {
         isBackButton={true}
       />
       <ProfileCard href="/"/>
-      <NextStepForm/>
+      <AddParentNextStepForm/>
     </EnrollerDashboardLayout>
   );
 }

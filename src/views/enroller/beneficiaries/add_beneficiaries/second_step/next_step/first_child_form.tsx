@@ -10,8 +10,7 @@ import {
 } from "@/components/form/select/controlled";
 import DocumentUploadCard from "@/components/cards/upload_card";
 import { Button } from "@/components/button";
-import { ControlledInput } from "@/components/form/input/controlled";
-import { generatePassword } from "@/utils/functions";
+import UploadCard from "@/components/cards/profile_upload";
 
 const options = [
   { id: "nin", name: "NIN" },
@@ -19,7 +18,7 @@ const options = [
   { id: "driverLicense", name: "Driving License" },
 ];
 
-const NextStepSchema = z.object({
+const mainApplicantSchema = z.object({
   profileImage: z
     .instanceof(File)
     .refine((file) => file.size > 0, { message: "Image is required" }),
@@ -27,19 +26,18 @@ const NextStepSchema = z.object({
   document: z.instanceof(File).refine((file) => file.size > 0, {
     message: "Supporting document is required",
   }),
-  password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-type NextStepFormData = z.infer<typeof NextStepSchema>;
+type MainApplicantFormData = z.infer<typeof mainApplicantSchema>;
 
-export default function NextStepForm() {
+export default function FirstChildForm() {
   const {
     handleSubmit,
     control,
     setValue,
     formState: {},
-  } = useForm<NextStepFormData>({
-    resolver: zodResolver(NextStepSchema),
+  } = useForm<MainApplicantFormData>({
+    resolver: zodResolver(mainApplicantSchema),
     defaultValues: {
       profileImage: undefined,
       documentType: "",
@@ -48,9 +46,8 @@ export default function NextStepForm() {
   });
 
   const [documentNames, setDocumentNames] = useState<string[]>([]);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: NextStepFormData) => {
+  const onSubmit = (data: MainApplicantFormData) => {
     console.log("Submitted data:", data);
 
     const formData = new FormData();
@@ -67,18 +64,46 @@ export default function NextStepForm() {
     }
   };
 
-  const handleGeneratePassword = () => {
-    const newPassword = generatePassword();
-    setValue("password", newPassword, { shouldValidate: true });
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
-      <div className="flex gap-4 mt-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <p className="text-text-dark text-xs font-plus_jakarta_sans">
+        Upload Documents for{" "}
+        <strong>Boma Dave to be reviewed for approval</strong>
+      </p>
+      <div className="flex gap-4">
+        <UploadCard
+          apiEndpoint=""
+          headingText="Upload Passport photograph"
+          subHeading="Clear and Precise in white or red background"
+          acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
+          isImage={true}
+          footerText={true}
+        />
+
         <DocumentUploadCard
           selectedFileName={documentNames[0] ?? null}
           onFileChange={handleDocumentSelect}
           headingText="Document of Identification"
+          subHeading="Invoice of school fees, Receipt of school fees"
+          hintText="Selected type must match attached file"
+          footerText={true}
+          selectField={
+            <ControlledSelect
+              name="documentType"
+              control={control}
+              label=""
+              items={options}
+              placeholder="Select Identification type"
+            >
+              {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
+            </ControlledSelect>
+          }
+        />
+
+        <DocumentUploadCard
+          selectedFileName={documentNames[0] ?? null}
+          onFileChange={handleDocumentSelect}
+          headingText="Other Document "
           subHeading="NIN, Int. Passport, Driver License or Voters card is accepted"
           hintText="Selected type must match attached file"
           footerText={true}
@@ -94,40 +119,11 @@ export default function NextStepForm() {
             </ControlledSelect>
           }
         />
-        <div>
-          <section className="border border-neutral-300 p-4 lg:w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
-            <h3 className="font-righteous text-text-dark">
-              Generate password for user
-            </h3>
-            <ControlledInput
-              name="password"
-              control={control}
-              label="Generated Password"
-              type={showPassword ? "text" : "password"}
-              rightSlot={
-                <span
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="text-xs text-primary font-medium cursor-pointer"
-                >
-                  {showPassword ? "Hide Password" : "Show Password"}
-                </span>
-              }
-            />
-
-            <Button type="button" onClick={handleGeneratePassword}>
-              Generate Password
-            </Button>
-          </section>
-          <p className="font-plus_jakarta_sans text-xs text-text-dark mt-2">
-            <span className="font-semibold text-primary-100">Hint:</span>on
-            creating user account we would notify them <br></br> about their login details
-          </p>
-        </div>
       </div>
 
-      <div className="flex justify-end mt-20 w-[53%]">
-        <Button type="submit" className="py-2 w-[8.6rem] ">
-          Save for User
+      <div className="flex justify-end mt-20">
+        <Button type="submit" className="py-2 w-[10rem]">
+          Save and Continue
         </Button>
       </div>
     </form>

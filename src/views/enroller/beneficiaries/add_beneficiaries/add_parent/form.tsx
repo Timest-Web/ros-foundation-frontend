@@ -10,6 +10,7 @@ import { Form } from "react-aria-components";
 import FormLayout from "../../../../form_layout";
 import { ControlledDateField } from "@/components/form/dateinput";
 import UploadCard from "@/components/cards/profile_upload";
+import { useRouter } from "next/navigation";
 
 const schema = z.object({
   file: z
@@ -36,7 +37,7 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function AddParentForm() {
-  const { control, handleSubmit} = useForm<FormValues>({
+  const { control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
     defaultValues: {
@@ -54,12 +55,10 @@ export default function AddParentForm() {
     },
   });
 
-
-
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
   };
-
+  const router = useRouter();
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
       <Controller
@@ -139,7 +138,15 @@ export default function AddParentForm() {
             type="text"
           />
           <div></div>
-          <Button className="py-3 mt-2" type="submit">
+          <Button
+            onPress={() =>
+              router.push(
+                "/enroller/beneficiaries/add-beneficiaries/add-parent/next-step"
+              )
+            }
+            className="py-3 mt-2"
+            type="submit"
+          >
             Continue
           </Button>
         </div>

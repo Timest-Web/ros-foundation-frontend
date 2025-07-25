@@ -24,8 +24,9 @@ interface ControlledInputProps<T extends FieldValues>
   type?: string;
   wrapperClassName?: string;
   inputClassName?: string;
+  labelClassName?: string;
   rightSlot?: ReactNode;
-  placeholder?:string
+  placeholder?: string;
 }
 
 export function ControlledInput<T extends FieldValues>({
@@ -36,6 +37,7 @@ export function ControlledInput<T extends FieldValues>({
   type = "text",
   wrapperClassName = "",
   inputClassName = "",
+  labelClassName,
   rightSlot,
   placeholder,
   ...props
@@ -51,12 +53,14 @@ export function ControlledInput<T extends FieldValues>({
   return (
     <TextField {...props} className={`w-full ${wrapperClassName}`}>
       {label && (
-        <div className="flex justify-between px-[0.15rem] lg:px-2 mb-2" >
-          <Label className="mb-1 text-text-dark block font-medium text-xs lg:text-xs font-plus_jakarta_sans">
+        <div className="flex justify-between px-[0.15rem] lg:px-2 mb-2">
+          <Label
+            className={`${labelClassName} text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans`}
+          >
             {label}
           </Label>
           {rightSlot && (
-            <div className=" text-text-dark font-medium text-xs font-plus_jakarta_sans cursor-pointer">
+            <div className=" text-text-dark font-medium text-xs lg:text-sm font-plus_jakarta_sans cursor-pointer">
               {rightSlot}
             </div>
           )}
@@ -85,7 +89,10 @@ export function ControlledInput<T extends FieldValues>({
       )}
 
       {error?.message && (
-        <Text slot="errorMessage" className="text-xs font-plus_jakarta_sans font-medium text-red-500 mt-1">
+        <Text
+          slot="errorMessage"
+          className="text-xs font-plus_jakarta_sans font-medium text-red-500 mt-1"
+        >
           {error.message}
         </Text>
       )}
