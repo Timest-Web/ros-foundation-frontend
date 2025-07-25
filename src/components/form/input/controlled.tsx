@@ -52,11 +52,11 @@ export function ControlledInput<T extends FieldValues>({
     <TextField {...props} className={`w-full ${wrapperClassName}`}>
       {label && (
         <div className="flex justify-between px-[0.15rem] lg:px-2 mb-2" >
-          <Label className="mb-1 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
+          <Label className="mb-1 text-text-dark block font-medium text-xs lg:text-xs font-plus_jakarta_sans">
             {label}
           </Label>
           {rightSlot && (
-            <div className=" text-text-dark font-medium text-sm font-plus_jakarta_sans cursor-pointer">
+            <div className=" text-text-dark font-medium text-xs font-plus_jakarta_sans cursor-pointer">
               {rightSlot}
             </div>
           )}
