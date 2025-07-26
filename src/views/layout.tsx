@@ -102,9 +102,16 @@ interface MenuItemProps {
   href: string;
 }
 
+function isExactOrNestedMatch(pathname: string, href: string): boolean {
+  if (pathname === href) return true;
+
+  const isBaseModule = href.split("/").filter(Boolean).length === 1;
+  return !isBaseModule && pathname.startsWith(href + "/");
+}
+
 function MenuItem(props: MenuItemProps) {
   const pathname = usePathname();
-  const isActive = pathname === props.href || pathname.startsWith(props.href);
+  const isActive = isExactOrNestedMatch(pathname, props.href);
 
   return (
     <Link

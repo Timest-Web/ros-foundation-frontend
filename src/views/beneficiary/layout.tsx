@@ -15,7 +15,7 @@ const menuItems = [
   {
     icon: <BoxIcon />,
     text: "Onboarding",
-    href: "/beneficiary/onboarding",
+    href: "/beneficiary",
   },
   {
     icon: <UserIcon />,

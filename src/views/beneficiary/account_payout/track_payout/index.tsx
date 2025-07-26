@@ -19,37 +19,37 @@ export default function TrackPayoutView() {
     { key: "status", label: "Status" },
     { key: "beneficiary", label: "Beneficiary" },
     { key: "dateOfApproval", label: "Date of Approval" },
-    {
-      key: "payoutStatus",
-      label: "Payout status",
-      render: (value: PayoutRecord["payoutStatus"]) => (
-        <span
-          className={
-            value === "Completed"
-              ? "text-accent-200 font-medium"
-              : "text-accent-100 font-medium"
-          }
-        >
-          {value}
-        </span>
-      ),
-    },
-    {
-      key: "receipt",
-      label: "Receipt",
-      render: (value: PayoutRecord["receipt"]) =>
-        value === "Pending" ? (
-          <span className="text-text-dark">Pending</span>
-        ) : (
-          <a
-            href={`/${value}`}
-            download
-            className=""
-          >
-            {value}
-          </a>
-        ),
-    },
+    // {
+    //   key: "payoutStatus",
+    //   label: "Payout status",
+    //   render: (value: PayoutRecord["payoutStatus"]) => (
+    //     <span
+    //       className={
+    //         value === "Completed"
+    //           ? "text-accent-200 font-medium"
+    //           : "text-accent-100 font-medium"
+    //       }
+    //     >
+    //       {value}
+    //     </span>
+    //   ),
+    // },
+    // {
+    //   key: "receipt",
+    //   label: "Receipt",
+    //   render: (value: PayoutRecord["receipt"]) =>
+    //     value === "Pending" ? (
+    //       <span className="text-text-dark">Pending</span>
+    //     ) : (
+    //       <a
+    //         href={`/${value}`}
+    //         download
+    //         className=""
+    //       >
+    //         {value}
+    //       </a>
+    //     ),
+    // },
   ];
 
   return (

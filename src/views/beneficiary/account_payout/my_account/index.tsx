@@ -49,7 +49,7 @@ const columns: ColumnDefinition<any>[] = [
           No bank account has been added yet
         </p>
       </section> */}
-      <section className="border border-neutral-300 rounded-md w-2/3">
+      <section className=" w-2/3">
         <CustomTable
           columns={columns}
           data={bankAccounts}
