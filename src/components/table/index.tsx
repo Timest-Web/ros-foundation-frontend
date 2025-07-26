@@ -21,11 +21,15 @@ import { FiSearch } from "react-icons/fi";
 import { Pagination } from "./pagination";
 import { useRouter } from "next/navigation";
 
+// In CustomTable.tsx
+
 export type ColumnDefinition<T> = {
-  render?: (value: any, row?: T) => React.ReactNode;
-  key: keyof T;
+  // The key can now be a generic string, as "action" is not a keyof the User object.
+  key: string;
   label: string;
   isRowHeader?: boolean;
+  // The render function simply receives the entire row object.
+  render?: (row: T) => React.ReactNode;
 };
 
 type CustomTableProps<T> = {
@@ -116,11 +120,18 @@ export function CustomTable<T extends Record<string, any>>({
             {currentData.map((row, rowIndex) => (
               <Row key={offset + rowIndex}>
                 {columns.map((col) => (
+                  // Inside CustomTable.tsx, in the TableBody map
+
                   <Cell
                     key={String(col.key)}
                     className="px-6 py-4 text-sm text-text-dark"
                   >
-                    {col.render ? col.render(row[col.key], row) : row[col.key]}
+                    {/* === THE FIX === */}
+                    {
+                      col.render
+                        ? col.render(row) // Pass the entire row object
+                        : (row as any)[col.key] // Keep the fallback
+                    }
                   </Cell>
                 ))}
               </Row>
