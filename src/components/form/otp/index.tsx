@@ -117,7 +117,7 @@ export function OTPInput<T extends FieldValues>({
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={handlePaste}
-              className={`w-full h-16 text-center text-text-dark font-plus_jakarta_sans border ${
+              className={`w-full h-20 text-center text-text-dark font-plus_jakarta_sans border ${
                 error ? "border-red-500" : "border-neutral-300"
               } rounded-sm text-lg font-semibold focus:bg-white focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent ${inputClassName}`}
             />

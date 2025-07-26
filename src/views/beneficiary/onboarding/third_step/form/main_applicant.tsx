@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
@@ -55,7 +55,6 @@ export default function MainApplicantForm() {
     formData.append("document", data.document);
   };
 
-
   const handleDocumentSelect = (fileList: FileList | null) => {
     if (fileList && fileList.length > 0) {
       const file = fileList[0];
@@ -71,20 +70,14 @@ export default function MainApplicantForm() {
         grant payment.
       </p>
       <div className="flex gap-4">
-        <Controller
-          name="profileImage"
-          control={control}
-          render={() => (
-            <UploadCard
-              headingText="Upload Passport photograph"
-              subHeading="Clear and Precise in white or red background"
-              acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
-              isImage={true}
-              footerText={true}
-            />
-          )}
+        <UploadCard
+          headingText="Upload Passport photograph"
+          subHeading="Clear and Precise in white or red background"
+          acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
+          isImage={true}
+          footerText={true}
+          formats="PNG, JPEG, PDF*"
         />
-
         <DocumentUploadCard
           selectedFileName={documentNames[0] ?? null}
           onFileChange={handleDocumentSelect}
@@ -99,7 +92,6 @@ export default function MainApplicantForm() {
               label=""
               items={options}
               placeholder="Select Identification type"
-              
             >
               {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
             </ControlledSelect>

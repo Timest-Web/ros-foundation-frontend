@@ -38,7 +38,7 @@ export default function DashboardLayout({
       <nav className="bg-neutral-100 px-6 lg:px-16 py-4 flex justify-end space-x-2 lg:space-x-5 border border-b border-neutral-300">
         {isNotification && (
           <Link
-            href={"/notification"}
+            href={"beneficiary/notification"}
             className="border border-neutral-300 flex justify-between p-2 rounded-md w-[9.5rem] font-plus_jakarta_sans"
           >
             <NotificationIcon />

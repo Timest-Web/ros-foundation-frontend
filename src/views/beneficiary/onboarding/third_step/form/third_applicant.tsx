@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import {
@@ -18,7 +18,7 @@ const options = [
   { id: "driverLicense", name: "Driving License" },
 ];
 
-const mainApplicantSchema = z.object({
+const thirdApplicantSchema = z.object({
   profileImage: z
     .instanceof(File)
     .refine((file) => file.size > 0, { message: "Image is required" }),
@@ -28,7 +28,7 @@ const mainApplicantSchema = z.object({
   }),
 });
 
-type MainApplicantFormData = z.infer<typeof mainApplicantSchema>;
+type thirdApplicantFormData = z.infer<typeof thirdApplicantSchema>;
 
 export default function ThirdApplicantForm() {
   const {
@@ -36,18 +36,17 @@ export default function ThirdApplicantForm() {
     control,
     setValue,
     formState: {},
-  } = useForm<MainApplicantFormData>({
-    resolver: zodResolver(mainApplicantSchema),
+  } = useForm<thirdApplicantFormData>({
+    resolver: zodResolver(thirdApplicantSchema),
     defaultValues: {
       profileImage: undefined,
       documentType: "",
       document: undefined,
     },
   });
-
   const [documentNames, setDocumentNames] = useState<string[]>([]);
 
-  const onSubmit = (data: MainApplicantFormData) => {
+  const onSubmit = (data: thirdApplicantFormData) => {
     console.log("Submitted data:", data);
 
     const formData = new FormData();
@@ -55,8 +54,6 @@ export default function ThirdApplicantForm() {
     formData.append("documentType", data.documentType);
     formData.append("document", data.document);
   };
-
-
 
   const handleDocumentSelect = (fileList: FileList | null) => {
     if (fileList && fileList.length > 0) {
@@ -73,20 +70,14 @@ export default function ThirdApplicantForm() {
         grant payment.
       </p>
       <div className="flex gap-4">
-        <Controller
-          name="profileImage"
-          control={control}
-          render={() => (
-            <UploadCard
-              headingText="Upload Passport photograph"
-              subHeading="Clear and Precise in white or red background"
-              acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
-              isImage={true}
-              footerText={true}
-            />
-          )}
+        <UploadCard
+          headingText="Upload Passport photograph"
+          subHeading="Clear and Precise in white or red background"
+          acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
+          isImage={true}
+          footerText={true}
+          formats="PNG, JPEG, PDF*"
         />
-
         <DocumentUploadCard
           selectedFileName={documentNames[0] ?? null}
           onFileChange={handleDocumentSelect}
@@ -109,7 +100,7 @@ export default function ThirdApplicantForm() {
       </div>
 
       <div className="flex justify-end mt-20">
-        <Button type="submit" className="py-2 w-[8.6rem]">
+        <Button type="submit" className="py-2 w-[8.6rem] ">
           Save for User
         </Button>
       </div>

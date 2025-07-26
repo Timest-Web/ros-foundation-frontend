@@ -71,7 +71,7 @@ export function ControlledSelect<
           {...selectProps}
         >
           {label && (
-            <Label className="mb-3 text-text-dark block font-medium text-sm font-plus_jakarta_sans">
+            <Label className="mb-3 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
               {label}
             </Label>
           )}

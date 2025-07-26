@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import UploadCard from "@/components/cards/profile_upload";
@@ -21,7 +21,6 @@ type FormData = z.infer<typeof schema>;
 export default function BusinessProposalForm() {
   const {
     handleSubmit,
-    control,
     formState: {},
   } = useForm<FormData>({
     resolver: zodResolver(schema),
@@ -37,10 +36,6 @@ export default function BusinessProposalForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      <Controller
-        control={control}
-        name="file"
-        render={({ }) => (
           <UploadCard
             headingText="Proposal Document"
             subHeading=""
@@ -56,8 +51,6 @@ export default function BusinessProposalForm() {
             isImage={false}
             formats="PNG, JPEG, PDF*, File must be less than 2mb"
           />
-        )}
-      />
       <div className="flex justify-end mt-16">
         <Button type="submit" className="py-2 w-[9rem]">
           Save & Continue

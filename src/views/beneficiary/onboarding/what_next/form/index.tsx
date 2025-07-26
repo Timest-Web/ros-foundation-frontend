@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { ControlledInput } from "@/components/form/input/controlled";
@@ -12,12 +12,6 @@ import { ControlledDateField } from "@/components/form/dateinput";
 import UploadCard from "@/components/cards/profile_upload";
 
 const schema = z.object({
-  file: z
-    .any()
-    .refine(
-      (file) => file instanceof FileList && file.length > 0,
-      "Please upload a document"
-    ),
   firstname: z.string().min(1, "First name is required"),
   lastname: z.string().min(1, "Last name is required"),
   phoneNumber: z
@@ -36,11 +30,10 @@ const schema = z.object({
 type FormValues = z.infer<typeof schema>;
 
 export default function WhatNextForm() {
-  const { control, handleSubmit} = useForm<FormValues>({
+  const { control, handleSubmit, reset } = useForm<FormValues>({
     resolver: zodResolver(schema),
     mode: "onSubmit",
     defaultValues: {
-      file: null,
       firstname: "",
       lastname: "",
       phoneNumber: "",
@@ -54,25 +47,18 @@ export default function WhatNextForm() {
     },
   });
 
-
-
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log("Submitted data:", data);
+    reset()
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
-      <Controller
-        control={control}
-        name="file"
-        render={({}) => (
-          <UploadCard
-            headingText="Add a Profile picture"
-            subHeading="Add a Profile picture if you wish, else not so important"
-            acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}
-            isImage={true}
-          />
-        )}
+      <UploadCard
+        headingText="Add a Profile picture"
+        subHeading="Add a Profile picture if you wish, else not so important"
+        acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}
+        isImage={true}
       />
       <FormLayout
         heading="Account Bio data"
