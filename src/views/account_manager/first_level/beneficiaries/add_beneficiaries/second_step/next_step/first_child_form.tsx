@@ -30,7 +30,7 @@ const mainApplicantSchema = z.object({
 
 type MainApplicantFormData = z.infer<typeof mainApplicantSchema>;
 
-export default function MainApplicantForm() {
+export default function FirstChildForm() {
   const {
     handleSubmit,
     control,
@@ -65,51 +65,67 @@ export default function MainApplicantForm() {
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <p className="text-text-dark text-xs font-plus_jakarta_sans">
-        All Uploads for Boma Dave
+        Upload Documents for{" "}
+        <strong>Boma Dave to be reviewed for approval</strong>
       </p>
-      <div className="flex gap-4 mt-4">
+      <div className="flex gap-4">
         <UploadCard
+          apiEndpoint=""
           headingText="Upload Passport photograph"
           subHeading="Clear and Precise in white or red background"
           acceptedFileTypes={["image/png", "image/jpeg", "image/jpg"]}
           isImage={true}
           footerText={true}
-          formats="PNG, JPEG, PDF*, File must be less than 2mb"
-          isDisabled={true}
-
         />
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <DocumentUploadCard
-          isDisabled={true}
-            selectedFileName={documentNames[0] ?? null}
-            onFileChange={handleDocumentSelect}
-            headingText="Document of Identification"
-            subHeading="NIN, Int. Passport, Driver License or Voters card is accepted"
-            hintText="Selected type must match attached file"
-            footerText={true}
-            selectField={
-              <ControlledSelect
-                name="documentType"
-                control={control}
-                label=""
-                items={options}
-                placeholder="Select Identification type"
-                isDisabled={true}
-              >
-                {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
-              </ControlledSelect>
-            }
-          />
 
-          <div className="flex justify-end mt-20">
-            <Button type="submit" className="py-2 w-[8.6rem] ">
-              Save for User
-            </Button>
-          </div>
-        </form>
+        <DocumentUploadCard
+          selectedFileName={documentNames[0] ?? null}
+          onFileChange={handleDocumentSelect}
+          headingText="Document of Identification"
+          subHeading="NIN, Int. Passport, Driver License or Voters card is accepted, Birth Certificate"
+          hintText="Selected type must match attached file"
+          footerText={true}
+          selectField={
+            <ControlledSelect
+              name="documentType"
+              control={control}
+              label=""
+              items={options}
+              placeholder="Select Identification type"
+            >
+              {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
+            </ControlledSelect>
+          }
+        />
+
+        <DocumentUploadCard
+          selectedFileName={documentNames[0] ?? null}
+          onFileChange={handleDocumentSelect}
+          headingText="Other Document "
+          subHeading="Invoice of school fees, Receipt of school fees"
+          hintText="Selected type must match attached file"
+          footerText={true}
+          selectField={
+            <ControlledSelect
+              name="documentType"
+              control={control}
+              label=""
+              items={options}
+              placeholder="Select document type"
+            >
+              {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
+            </ControlledSelect>
+          }
+        />
       </div>
-    </div>
+
+      <div className="flex justify-end mt-20">
+        <Button type="submit" className="py-2 w-[10rem]">
+          Save and Continue
+        </Button>
+      </div>
+    </form>
   );
 }

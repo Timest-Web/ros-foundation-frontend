@@ -68,6 +68,7 @@ export default function EnrollerBeneficiariesView() {
           ariaLabel="Users"
           onSearch={setQuery}
           showSearch={true}
+          pageLink=""
         />
       </div>
     </EnrollerDashboardLayout>

@@ -57,6 +57,7 @@ export default function TrackPayoutView() {
       columns={columns}
       data={payoutRecords}
       ariaLabel="Payout History"
+      pageLink=""
     />
   );
 }

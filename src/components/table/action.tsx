@@ -38,11 +38,7 @@ export function ActionMenu({
       >
         <MoreIcon />
       </Button>
-      <Popover className="bg-white shadow-lg rounded p-3 w-32 text-text-dark text-sm font-plus_jakarta_sans">
-        {/*
-          We now use the `items` prop to build the collection dynamically.
-          This is the recommended pattern for abstractions.
-        */}
+      <Popover className="bg-white shadow-lg rounded p-3 w-44 text-text-dark text-sm font-plus_jakarta_sans">
         <Menu
           items={items}
           onAction={onAction}

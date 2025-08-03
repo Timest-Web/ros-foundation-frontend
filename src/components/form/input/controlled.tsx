@@ -78,6 +78,10 @@ export function ControlledInput<T extends FieldValues>({
           placeholder={placeholder}
           className={`w-full border ${
             error ? "border-red-500" : "border-neutral-300"
+          } ${
+            props.isDisabled
+              ? "bg-neutral-100 text-gray-500 cursor-not-allowed"
+              : "focus:bg-white"
           } rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent ${inputClassName}`}
         />
       </div>

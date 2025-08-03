@@ -6,6 +6,7 @@ import { Button, FileTrigger } from "react-aria-components";
 import Camera from "@/components/icons/Camera";
 import CloudIcon from "@/components/icons/CloudIcon";
 import AttachIcon from "../icons/AttachIcon";
+import clsx from "clsx";
 
 interface UploadCardProps {
   headingText: string;
@@ -18,7 +19,9 @@ interface UploadCardProps {
   required?: boolean;
   maxFileSize?: number;
   onFileChange?: (file: File | null) => void;
-  formats?: string; 
+  formats?: string;
+  isDisabled?: boolean;
+  className?: string;
 }
 
 export default function UploadCard({
@@ -33,6 +36,8 @@ export default function UploadCard({
   maxFileSize = 5 * 1024 * 1024, // 5MB default
   onFileChange,
   formats,
+  isDisabled,
+  className,
 }: UploadCardProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -42,15 +47,16 @@ export default function UploadCard({
   const [validationError, setValidationError] = useState<string | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
- 
   const validateFile = (file: File | null): string | null => {
     if (!file) {
       return required ? "File is required" : null;
     }
 
-
     if (file.size > maxFileSize) {
-      return `File size must be less than ${(maxFileSize / (1024 * 1024)).toFixed(1)}MB`;
+      return `File size must be less than ${(
+        maxFileSize /
+        (1024 * 1024)
+      ).toFixed(1)}MB`;
     }
 
     if (!acceptedFileTypes.includes(file.type)) {
@@ -58,7 +64,7 @@ export default function UploadCard({
       return `Unsupported file type. Please use: ${friendlyFormats}`;
     }
 
-    return null; 
+    return null;
   };
 
   const handleFileSelect = (fileList: FileList | null) => {
@@ -70,15 +76,14 @@ export default function UploadCard({
     const error = validateFile(file);
     if (error) {
       setValidationError(error);
-      setSelectedFile(null); 
-      if(previewUrl) URL.revokeObjectURL(previewUrl); 
+      setSelectedFile(null);
+      if (previewUrl) URL.revokeObjectURL(previewUrl);
       setPreviewUrl(null);
     } else {
       setValidationError(null);
       setSelectedFile(file);
     }
   };
-
 
   useEffect(() => {
     let objectUrl: string | null = null;
@@ -145,7 +150,13 @@ export default function UploadCard({
   return (
     <div>
       <div>
-        <div className="border border-neutral-300 p-4 lg:w-72 h-[14rem] rounded-md flex flex-col gap-3 text-text-dark">
+        <div
+          className={clsx(
+            "border border-neutral-300 p-4 lg:w-72 rounded-md flex flex-col gap-3 text-text-dark",
+            !className?.includes("h-") && "h-[14rem]",
+            className
+          )}
+        >
           <p className="font-righteous">{headingText}</p>
           <p className="font-plus_jakarta_sans text-xs">{subHeading}</p>
 
@@ -154,7 +165,10 @@ export default function UploadCard({
               acceptedFileTypes={acceptedFileTypes}
               onSelect={handleFileSelect}
             >
-              <Button className="flex flex-col items-center">
+              <Button
+                isDisabled={isDisabled}
+                className="flex flex-col items-center"
+              >
                 <div className="border border-neutral-300 w-20 h-20 rounded-full flex justify-center items-center overflow-hidden relative">
                   {selectedFile ? (
                     isImage && previewUrl ? (
@@ -174,7 +188,7 @@ export default function UploadCard({
                     <AttachIcon />
                   )}
                 </div>
-                {!selectedFile && (
+                {!isDisabled && !selectedFile && (
                   <p className="font-plus_jakarta_sans font-semibold text-xs mt-4">
                     Click to Add
                   </p>
@@ -190,31 +204,33 @@ export default function UploadCard({
           )}
         </div>
 
-        <Button
-          type="button"
-          onClick={handleUpload}
-          className={`flex gap-3 items-center text-xs justify-center border p-2 rounded-md w-full lg:w-72 font-plus_jakarta_sans mt-2 font-bold transition-colors ${
-            isUploading
-              ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+        {!isDisabled && (
+          <Button
+            type="button"
+            onClick={handleUpload}
+            className={`flex gap-3 items-center text-xs justify-center border p-2 rounded-md w-full lg:w-72 font-plus_jakarta_sans mt-2 font-bold transition-colors ${
+              isUploading
+                ? "bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed"
+                : uploadSuccess
+                ? "bg-green-50 text-green-700 border-green-300"
+                : uploadError || validationError
+                ? "bg-red-50 text-red-700 border-red-300"
+                : "text-primary-100 border-neutral-300 hover:bg-gray-50"
+            }`}
+            isDisabled={isUploading || !selectedFile || !!validationError}
+          >
+            <CloudIcon />
+            {isUploading
+              ? "Uploading..."
               : uploadSuccess
-              ? "bg-green-50 text-green-700 border-green-300"
+              ? "Uploaded!"
               : uploadError || validationError
-              ? "bg-red-50 text-red-700 border-red-300"
-              : "text-primary-100 border-neutral-300 hover:bg-gray-50"
-          }`}
-          isDisabled={isUploading || !selectedFile || !!validationError}
-        >
-          <CloudIcon />
-          {isUploading
-            ? "Uploading..."
-            : uploadSuccess
-            ? "Uploaded!"
-            : uploadError || validationError
-            ? "Upload Failed"
-            : isImage
-            ? "Upload Image"
-            : "Upload Document"}
-        </Button>
+              ? "Upload Failed"
+              : isImage
+              ? "Upload Image"
+              : "Upload Document"}
+          </Button>
+        )}
 
         {uploadError && !validationError && (
           <div className="flex justify-center w-72">
@@ -224,7 +240,7 @@ export default function UploadCard({
           </div>
         )}
 
-        {footerText && (
+        {!isDisabled && footerText && (
           <div className="flex justify-center w-72">
             <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark mt-2">
               File format: {formats}

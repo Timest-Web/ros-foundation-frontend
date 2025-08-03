@@ -58,7 +58,7 @@ export default function AccountManagerOnePasswordRecoveryForm() {
         Send me OTP Recovery code
       </Button>
       <AdditionalFormInfoLink
-       className="mt-6"
+        className="mt-6"
         text="I already have an Account"
         linkText="Start by Login in here"
         href="/"

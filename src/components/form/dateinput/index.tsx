@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
@@ -8,6 +9,7 @@ import {
   Label,
   FieldError,
   Text,
+  ValidationResult,
 } from "react-aria-components";
 import {
   useController,
@@ -15,40 +17,54 @@ import {
   type FieldValues,
   type Path,
 } from "react-hook-form";
-import type { DateValue, ValidationResult } from "react-aria-components";
-import React from "react";
+import React, { useMemo } from "react";
+// --- Import the necessary utilities and types ---
+import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 
-interface CustomDateFieldProps<T extends DateValue> {
+// --- CustomDateField ---
+// No major logic change, but let's be more specific with the types.
+interface CustomDateFieldProps {
   label?: string;
   description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
-  value: T | null;
-  onChange: (value: any) => void;
+  // It now specifically expects a CalendarDate from the controller
+  value: CalendarDate | null;
+  // It will also pass a CalendarDate back up
+  onChange: (value: CalendarDate | null) => void;
+  isDisabled?: boolean;
 }
 
-function CustomDateField<T extends DateValue>({
+function CustomDateField({
   label,
   description,
   errorMessage,
   value,
   onChange,
-}: CustomDateFieldProps<T>) {
+  isDisabled,
+}: CustomDateFieldProps) {
   return (
-    <DateField value={value} onChange={onChange}>
-      <Label className="mb-3 px-2 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
+    // The DateField now receives the correctly formatted value
+    <DateField
+      value={value}
+      onChange={onChange}
+      isDisabled={isDisabled}
+      className="flex flex-col gap-1"
+    >
+      <Label className="px-2 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
         {label}
       </Label>
       <DateInput
-        className={`w-full border border-neutral-300 rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent`}
+        className={`w-full border border-neutral-300 rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent data-[disabled]:bg-gray-200 data-[disabled]:cursor-not-allowed`}
       >
         {(segment) => <DateSegment className={"uppercase"} segment={segment} />}
       </DateInput>
       {description && <Text slot="description">{description}</Text>}
-      <FieldError>{errorMessage}</FieldError>
+      <FieldError className="text-red-600 text-xs">{errorMessage}</FieldError>
     </DateField>
   );
 }
 
+// --- ControlledDateField (The "Bridge") ---
 interface ControlledDateFieldProps<
   TFieldValues extends FieldValues,
   TName extends Path<TFieldValues>
@@ -57,6 +73,7 @@ interface ControlledDateFieldProps<
   name: TName;
   label?: string;
   description?: string;
+  isDisabled?: boolean; // <-- Add isDisabled prop here
 }
 
 export function ControlledDateField<
@@ -67,22 +84,54 @@ export function ControlledDateField<
   name,
   label,
   description,
+  isDisabled, // <-- Receive it here
 }: ControlledDateFieldProps<TFieldValues, TName>) {
   const {
-    field: { value, onChange },
+    field: { value, onChange }, // This `value` is a JS Date or string
     fieldState: { error },
   } = useController({
     control,
     name,
   });
 
+  // STEP 1: CONVERT INCOMING VALUE (JS Date -> CalendarDate)
+  // useMemo will prevent re-calculating on every render
+  const calendarDateValue = useMemo<CalendarDate | null>(() => {
+    if (!value) return null;
+    try {
+      // Handles both JS Date objects and "YYYY-MM-DD" strings
+      const date = new Date(value);
+      return new CalendarDate(
+        date.getFullYear(),
+        date.getMonth() + 1, // CalendarDate month is 1-based
+        date.getDate()
+      );
+    } catch (e) {
+      console.error("Invalid date value for ControlledDateField:", value);
+      return null;
+    }
+  }, [value]);
+
+  // STEP 2: CONVERT OUTGOING VALUE (CalendarDate -> JS Date)
+  const handleDateChange = (newDate: CalendarDate | null) => {
+    if (newDate) {
+      // Convert the CalendarDate back to a JS Date for react-hook-form
+      const jsDate = newDate.toDate(getLocalTimeZone());
+      onChange(jsDate);
+    } else {
+      onChange(null);
+    }
+  };
+
   return (
     <CustomDateField
       label={label}
       description={description}
       errorMessage={error?.message}
-      value={value ?? null}
-      onChange={onChange}
+      // Pass the converted value and change handler
+      value={calendarDateValue}
+      onChange={handleDateChange}
+      isDisabled={isDisabled} // <-- Pass it down
     />
   );
 }
