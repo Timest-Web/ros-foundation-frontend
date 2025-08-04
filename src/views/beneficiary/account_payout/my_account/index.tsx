@@ -54,6 +54,7 @@ const columns: ColumnDefinition<any>[] = [
           columns={columns}
           data={bankAccounts}
           ariaLabel="Bank Accounts"
+          pageLink="/"
         />
       </section>
     </div>

@@ -11,8 +11,8 @@ interface AltAuthLayoutProps {
 
 export default function AltAuthLayout(props: AltAuthLayoutProps) {
   return (
-    <div className="flex justify-center items-center">
-      <div className="w-[30rem] pt-20">
+    <div className="flex justify-center items-center min-h-screen">
+      <div className="w-[30rem]">
         <section className={`flex flex-col gap-1 mb-4 px-2 ${props.className}`}>
           {props.OtpSubHeader}
           <header className="font-righteous text-[2.4rem] text-black">

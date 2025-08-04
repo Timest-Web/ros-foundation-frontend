@@ -42,7 +42,7 @@ export default function EnrollerProfileForm() {
           apiEndpoint=""
           headingText="Add a Profile picture"
           subHeading="Add a Profile picture if you wish, else not so important"
-          acceptedFileTypes={["image/png", "image/jpg", "image/jpeg"]}
+          acceptedFileTypes={['image/png', 'mage/jpg', 'image/jpeg']}
           isImage={true}
         />
         <DashboardCard

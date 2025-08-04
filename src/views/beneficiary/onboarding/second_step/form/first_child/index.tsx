@@ -14,7 +14,6 @@ import {
   SelectItem,
 } from "@/components/form/select/controlled";
 
-// Sample options for education level
 const options = [
   { key: "primary", name: "Primary" },
   { key: "secondary", name: "Secondary" },

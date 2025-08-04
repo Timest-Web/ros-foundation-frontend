@@ -77,9 +77,12 @@ export default function MainApplicantForm() {
           isImage={true}
           footerText={true}
           formats="PNG, JPEG, PDF*, File must be less than 2mb"
+          isDisabled={true}
+
         />
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <DocumentUploadCard
+          isDisabled={true}
             selectedFileName={documentNames[0] ?? null}
             onFileChange={handleDocumentSelect}
             headingText="Document of Identification"
@@ -93,6 +96,7 @@ export default function MainApplicantForm() {
                 label=""
                 items={options}
                 placeholder="Select Identification type"
+                isDisabled={true}
               >
                 {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
               </ControlledSelect>

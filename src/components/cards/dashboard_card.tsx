@@ -45,7 +45,7 @@ export function DashboardCard(props: DashboardCardProps) {
   );
 }
 
-interface OnboardingCompletedCardProps {
+interface DashboardCompletedCardProps {
   headingText: string;
   content: React.ReactNode;
   buttonText: string;
@@ -53,7 +53,7 @@ interface OnboardingCompletedCardProps {
   profilePicture?: StaticImageData;
 }
 
-export function OnboardingCompletedCard(props: OnboardingCompletedCardProps) {
+export function DashboardCompletedCard(props: DashboardCompletedCardProps) {
   return (
     <div className="border border-neutral-300 p-4 rounded-md flex flex-col justify-between min-h-[5rem]">
       <div className="flex flex-col gap-4 grow">

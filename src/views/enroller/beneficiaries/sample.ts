@@ -5,10 +5,10 @@ export interface User {
   phone: string;
   email: string;
   address: string;
+  status: "verified" | "unverified";
 }
 
-
-export const users = [
+export const users: User[] = [
   {
     id: 1,
     firstName: "Boma",
@@ -16,6 +16,7 @@ export const users = [
     phone: "08031234567",
     email: "boma.dave@example.com",
     address: "12 Marina Street, Lagos",
+    status: "verified",
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ export const users = [
     phone: "08122334455",
     email: "tolu.adetayo@example.com",
     address: "45 Allen Avenue, Ikeja",
+    status: "unverified",
   },
   {
     id: 3,
@@ -32,6 +34,7 @@ export const users = [
     phone: "09098765432",
     email: "emeka.obi@example.com",
     address: "21 Aba Road, Port Harcourt",
+    status: "verified",
   },
   {
     id: 4,
@@ -40,6 +43,7 @@ export const users = [
     phone: "08099887766",
     email: "fatima.bello@example.com",
     address: "88 Airport Road, Abuja",
+    status: "verified",
   },
   {
     id: 5,
@@ -48,6 +52,7 @@ export const users = [
     phone: "07033445566",
     email: "chinedu.okafor@example.com",
     address: "10 Zik Avenue, Enugu",
+    status: "unverified",
   },
   {
     id: 6,
@@ -56,6 +61,7 @@ export const users = [
     phone: "08112223344",
     email: "grace.johnson@example.com",
     address: "17 GRA Phase 1, Benin City",
+    status: "verified",
   },
   {
     id: 7,
@@ -64,6 +70,7 @@ export const users = [
     phone: "08056667788",
     email: "ahmed.sule@example.com",
     address: "3 Wuse Zone 4, Abuja",
+    status: "verified",
   },
   {
     id: 8,
@@ -72,6 +79,7 @@ export const users = [
     phone: "08189990000",
     email: "chioma.nnaji@example.com",
     address: "50 Awolowo Way, Ibadan",
+    status: "unverified",
   },
   {
     id: 9,
@@ -80,6 +88,7 @@ export const users = [
     phone: "07011223344",
     email: "ifeanyi.eze@example.com",
     address: "27 Garden Street, Owerri",
+    status: "verified",
   },
   {
     id: 10,
@@ -88,6 +97,7 @@ export const users = [
     phone: "09055667788",
     email: "amaka.okonkwo@example.com",
     address: "15 Asaba Road, Onitsha",
+    status: "verified",
   },
   {
     id: 11,
@@ -96,6 +106,7 @@ export const users = [
     phone: "08044443322",
     email: "segun.adebayo@example.com",
     address: "6 Ring Road, Ibadan",
+    status: "unverified",
   },
   {
     id: 12,
@@ -104,6 +115,7 @@ export const users = [
     phone: "07022334455",
     email: "halima.garba@example.com",
     address: "14 Sultan Road, Kaduna",
+    status: "unverified",
   },
   {
     id: 13,
@@ -112,6 +124,7 @@ export const users = [
     phone: "08123334444",
     email: "uche.maduka@example.com",
     address: "33 Aba Road, Umuahia",
+    status: "verified",
   },
   {
     id: 14,
@@ -120,6 +133,7 @@ export const users = [
     phone: "09011221122",
     email: "david.etim@example.com",
     address: "9 Uyo Close, Calabar",
+    status: "unverified",
   },
   {
     id: 15,
@@ -128,6 +142,7 @@ export const users = [
     phone: "08087654321",
     email: "zainab.aliyu@example.com",
     address: "27 Unity Road, Ilorin",
+    status: "verified",
   },
   {
     id: 16,
@@ -136,6 +151,7 @@ export const users = [
     phone: "07065544322",
     email: "kelvin.ezekiel@example.com",
     address: "41 Old Market Rd, Warri",
+    status: "verified",
   },
   {
     id: 17,
@@ -144,6 +160,7 @@ export const users = [
     phone: "08156678899",
     email: "lola.akinlade@example.com",
     address: "18 Lekki Phase 1, Lagos",
+    status: "unverified",
   },
   {
     id: 18,
@@ -152,6 +169,7 @@ export const users = [
     phone: "09033445522",
     email: "sunday.james@example.com",
     address: "29 Oba Street, Akure",
+    status: "verified",
   },
   {
     id: 19,
@@ -160,6 +178,7 @@ export const users = [
     phone: "08034455667",
     email: "rita.okwuosa@example.com",
     address: "77 Aba Road, Aba",
+    status: "verified",
   },
   {
     id: 20,
@@ -168,6 +187,7 @@ export const users = [
     phone: "07019998877",
     email: "daniel.iroha@example.com",
     address: "63 Stadium Rd, Owerri",
+    status: "unverified",
   },
   {
     id: 21,
@@ -176,6 +196,7 @@ export const users = [
     phone: "08178889900",
     email: "ngozi.ezeani@example.com",
     address: "20 Obi Street, Nnewi",
+    status: "unverified",
   },
   {
     id: 22,
@@ -184,6 +205,7 @@ export const users = [
     phone: "08021113344",
     email: "ibrahim.yakubu@example.com",
     address: "5 Emir Street, Kano",
+    status: "verified",
   },
   {
     id: 23,
@@ -192,6 +214,7 @@ export const users = [
     phone: "07099887766",
     email: "blessing.okorie@example.com",
     address: "22 Presidential Rd, Enugu",
+    status: "unverified",
   },
   {
     id: 24,
@@ -200,6 +223,7 @@ export const users = [
     phone: "08112233445",
     email: "samuel.taiwo@example.com",
     address: "31 Sabo Street, Abeokuta",
+    status: "verified",
   },
   {
     id: 25,
@@ -208,5 +232,6 @@ export const users = [
     phone: "09077665544",
     email: "nneka.mbanefo@example.com",
     address: "40 College Rd, Asaba",
+    status: "verified",
   },
 ];
