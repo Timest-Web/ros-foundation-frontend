@@ -23,7 +23,7 @@ const menuItem = [
     href: "/account-manager/first-level/profile",
   },
   { icon: <GrantIcon />, text: "Grants & Loans", href: "/a" },
-  { icon: <VerifyIcon />, text: "Verify Documents", href: "/b" },
+  { icon: <VerifyIcon />, text: "Verify Documents", href: "/account-manager/first-level/verify-documents" },
   { icon: <DocIcon />, text: "Export Reports", href: "/c" },
   {
     icon: <SettingsIcon />,

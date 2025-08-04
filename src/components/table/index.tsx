@@ -21,7 +21,6 @@ import { FiSearch } from "react-icons/fi";
 import { Pagination } from "./pagination";
 import { useRouter } from "next/navigation";
 
-
 export type ColumnDefinition<T> = {
   // The key can now be a generic string, as "action" is not a keyof the User object.
   key: string;
@@ -41,7 +40,9 @@ type CustomTableProps<T> = {
   itemsPerPage?: number;
   filterTabs?: { key: string; label: string }[];
   filterKey?: keyof T;
-  pageLink:string;
+  pageLink: string;
+  headerText?: string;
+  subHeading?: string;
 };
 
 export function CustomTable<T extends Record<string, any>>({
@@ -54,7 +55,9 @@ export function CustomTable<T extends Record<string, any>>({
   itemsPerPage = 5,
   filterTabs,
   filterKey,
-  pageLink
+  pageLink,
+  headerText,
+  subHeading
 }: CustomTableProps<T>) {
   const [localQuery, setLocalQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
@@ -92,9 +95,9 @@ export function CustomTable<T extends Record<string, any>>({
         <div className="flex justify-between mb-4">
           <div className="flex flex-col gap-4">
             <h3 className="font-righteous text-2xl lg:text-4xl text-black">
-              Beneficiaries
+              {headerText}
             </h3>
-            <p className="font-ar-one-sans text-black">List of Beneficiaries</p>
+            <p className="font-ar-one-sans text-black">{subHeading}</p>
           </div>
 
           <section className="flex gap-4 pt-4">
@@ -110,9 +113,7 @@ export function CustomTable<T extends Record<string, any>>({
             </div>
 
             <Button
-              onPress={() =>
-                router.push(pageLink)
-              }
+              onPress={() => router.push(pageLink)}
               className="w-48 h-[2.8rem] flex items-center justify-center gap-1"
             >
               <IoMdAdd />

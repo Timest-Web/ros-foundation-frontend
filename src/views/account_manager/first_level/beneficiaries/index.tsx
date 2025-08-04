@@ -78,6 +78,8 @@ export default function AccountManagerBeneficiariesView() {
         ]}
         filterKey="status"
         pageLink="beneficiaries/add-beneficiaries"
+        headerText="Beneficiaries"
+        subHeading="List of Beneficiaries"
       />
     </AccountManagerDashboardLayout>
   );
