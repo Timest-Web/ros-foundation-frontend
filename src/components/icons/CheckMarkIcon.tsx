@@ -4,7 +4,7 @@ interface CheckMarkIconProps {
   className?: string;
 }
 
-export default function CheckMarkIcon({ className = "w-5 h-5" }: CheckMarkIconProps) {
+export default function CheckMarkIcon({ className = "w-4 h-4" }: CheckMarkIconProps) {
   return (
     <svg
       viewBox="0 0 19 19"

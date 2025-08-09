@@ -16,6 +16,7 @@ import {
 } from "@/components/form/select/controlled";
 import DocumentUploadCard from "@/components/cards/upload_card";
 import AttachIcon from "@/components/icons/AttachIcon";
+import { banks } from "@/utils/data";
 
 const schema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -35,6 +36,8 @@ const schema = z.object({
   document: z.instanceof(File).refine((file) => file.size > 0, {
     message: "Supporting document is required",
   }),
+  bank: z.string().min(1, "Document type is required"),
+  accountNumber: z.string().min(1, "Account Number is required"),
 });
 
 const options = [
@@ -82,7 +85,7 @@ export default function ParentEditForm({ isEditing }: ParentEditFormProps) {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
-      <div className={`${isEditing? "gap-6":"gap-2"} flex flex-col`}>
+      <div className={`${isEditing ? "gap-6" : "gap-2"} flex flex-col`}>
         <UploadCard
           className="h-[13rem]"
           headingText="Uploaded Passport photograph"
@@ -127,22 +130,49 @@ export default function ParentEditForm({ isEditing }: ParentEditFormProps) {
             </div>
           }
         />
-        <div className="border border-neutral-300 p-4 lg:w-72 h-[10rem] rounded-md flex flex-col gap-4 text-text-dark">
-          <h3 className="font-righteous text-text-dark">
-            Bank Account details
-          </h3>
-          <section className="text-text-dark font-plus_jakarta_sans flex flex-col gap-3 text-sm font-medium">
-            <div className="flex justify-between">
-              <p>Kuda Bank</p>
-              <p className="text-primary-100">Default Account</p>
-            </div>
-            <p>210394836677</p>
-            <p>Boma Dave</p>
-          </section>
-        </div>
+        {!isEditing && (
+          <div className="border border-neutral-300 p-4 lg:w-72 h-[10rem] rounded-md flex flex-col gap-4 text-text-dark">
+            <h3 className="font-righteous text-text-dark">
+              Bank Account details
+            </h3>
+            <section className="text-text-dark font-plus_jakarta_sans flex flex-col gap-3 text-sm font-medium">
+              <div className="flex justify-between">
+                <p>Kuda Bank</p>
+                <p className="text-primary-100">Default Account</p>
+              </div>
+              <p>210394836677</p>
+              <p>Boma Dave</p>
+            </section>
+          </div>
+        )}
+        {isEditing && (
+          <div className="border border-neutral-300 p-4 lg:w-72  rounded-md flex flex-col gap-4 text-text-dark">
+            <h3 className="font-righteous text-text-dark">
+              Bank Account details
+            </h3>
+            <ControlledSelect
+              name="bank"
+              control={control}
+              label=""
+              items={banks}
+              placeholder="Select From List"
+              isDisabled={!isEditing}
+            >
+              {(item) => <SelectItem id={item.id}>{item.name}</SelectItem>}
+            </ControlledSelect>
+            <ControlledInput
+              name="accountNumber"
+              control={control}
+              label=""
+              type="text"
+              isDisabled={!isEditing}
+            />
+            <p className="text-text-dark font-plus_jakarta_sans font-semibold text-sm mt-2">Boma Dave</p>
+          </div>
+        )}
       </div>
       <FormLayout
-       className="h-[35.3rem]"
+        className="h-[35.3rem]"
         heading="Account Bio data"
         subHeading="User profile information such as name, age, state of origin and more"
       >
