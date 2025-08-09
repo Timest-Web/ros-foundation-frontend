@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { Button, FileTrigger } from "react-aria-components";
 import Camera from "@/components/icons/Camera";
 import CloudIcon from "@/components/icons/CloudIcon";
@@ -22,6 +22,8 @@ interface UploadCardProps {
   formats?: string;
   isDisabled?: boolean;
   className?: string;
+  initialImageUrl?: string;
+  modalTrigger?: ReactNode;
 }
 
 export default function UploadCard({
@@ -33,11 +35,13 @@ export default function UploadCard({
   onUpload,
   apiEndpoint,
   required = false,
-  maxFileSize = 5 * 1024 * 1024, // 5MB default
+  maxFileSize = 5 * 1024 * 1024,
   onFileChange,
   formats,
   isDisabled,
   className,
+  initialImageUrl,
+  modalTrigger,
 }: UploadCardProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
@@ -45,11 +49,13 @@ export default function UploadCard({
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(
+    initialImageUrl || null
+  );
 
   const validateFile = (file: File | null): string | null => {
     if (!file) {
-      return required ? "File is required" : null;
+      return required && !initialImageUrl ? "File is required" : null;
     }
 
     if (file.size > maxFileSize) {
@@ -77,8 +83,11 @@ export default function UploadCard({
     if (error) {
       setValidationError(error);
       setSelectedFile(null);
-      if (previewUrl) URL.revokeObjectURL(previewUrl);
-      setPreviewUrl(null);
+      if (previewUrl && !previewUrl.startsWith("blob:")) {
+      } else {
+        if (previewUrl) URL.revokeObjectURL(previewUrl);
+        setPreviewUrl(initialImageUrl || null);
+      }
     } else {
       setValidationError(null);
       setSelectedFile(file);
@@ -90,15 +99,16 @@ export default function UploadCard({
     if (selectedFile && isImage && selectedFile.type.startsWith("image/")) {
       objectUrl = URL.createObjectURL(selectedFile);
       setPreviewUrl(objectUrl);
-    } else {
-      setPreviewUrl(null);
+    } else if (!selectedFile) {
+      setPreviewUrl(initialImageUrl || null);
     }
+
     return () => {
       if (objectUrl) {
         URL.revokeObjectURL(objectUrl);
       }
     };
-  }, [selectedFile, isImage]);
+  }, [selectedFile, isImage, initialImageUrl]);
 
   useEffect(() => {
     if (onFileChange) {
@@ -147,6 +157,9 @@ export default function UploadCard({
     }
   };
 
+  const hasFileToUpload = !!selectedFile;
+  const hasInitialImage = !!initialImageUrl;
+
   return (
     <div>
       <div>
@@ -170,33 +183,36 @@ export default function UploadCard({
                 className="flex flex-col items-center"
               >
                 <div className="border border-neutral-300 w-20 h-20 rounded-full flex justify-center items-center overflow-hidden relative">
-                  {selectedFile ? (
-                    isImage && previewUrl ? (
-                      <img
-                        src={previewUrl}
-                        alt="Preview"
-                        className="w-full h-full object-cover rounded-full"
-                      />
-                    ) : (
-                      <p className="text-xs text-center px-2 break-all">
-                        {selectedFile.name}
-                      </p>
-                    )
+                  {isImage && previewUrl ? (
+                    <img
+                      src={previewUrl}
+                      alt="Preview"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  ) : selectedFile ? (
+                    <p className="text-xs text-center px-2 break-all">
+                      {selectedFile.name}
+                    </p>
                   ) : isImage ? (
                     <Camera />
                   ) : (
                     <AttachIcon />
                   )}
                 </div>
-                {!isDisabled && !selectedFile && (
+                {!isDisabled && !(hasFileToUpload || hasInitialImage) && (
                   <p className="font-plus_jakarta_sans font-semibold text-xs mt-4">
                     Click to Add
+                  </p>
+                )}
+                {!isDisabled && (hasFileToUpload || hasInitialImage) && (
+                  <p className="font-plus_jakarta_sans font-semibold text-xs mt-4 text-primary-100">
+                    Click to Change
                   </p>
                 )}
               </Button>
             </FileTrigger>
           </div>
-
+          <div>{modalTrigger}</div>
           {validationError && (
             <p className="font-plus_jakarta_sans text-xs text-red-600 text-center">
               {validationError}

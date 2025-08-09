@@ -5,7 +5,7 @@ import MoneyIcon from "@/components/icons/MoneyIcon";
 import SettingsIcon from "@/components/icons/SettingsIcon";
 import GrantIcon from "@/components/icons/GrantIcon";
 import VerifyIcon from "@/components/icons/VerifyIcon";
-import DocIcon from "@/components/icons/DocIcon";
+// import DocIcon from "@/components/icons/DocIcon";
 
 interface AccountManagerDashboardLayoutProps {
   children: React.ReactNode;
@@ -22,13 +22,25 @@ const menuItem = [
     text: "My Profile",
     href: "/account-manager/first-level/profile",
   },
-  { icon: <GrantIcon />, text: "Grants & Loans", href: "/a" },
-  { icon: <VerifyIcon />, text: "Verify Documents", href: "/account-manager/first-level/verify-documents" },
-  { icon: <DocIcon />, text: "Export Reports", href: "/c" },
+  {
+    icon: <GrantIcon />,
+    text: "Loans",
+    href: "/account-manager/first-level/loans",
+  },
+  {
+    icon: <VerifyIcon />,
+    text: "Verify Documents",
+    href: "/account-manager/first-level/verify-documents",
+  },
+  // {
+  //   icon: <DocIcon />,
+  //   text: "Export Reports",
+  //   href: "/account-manager/first-level/reports",
+  // },
   {
     icon: <SettingsIcon />,
     text: "Settings",
-    href: "/account-manager/first-level/beneficiaries/settings",
+    href: "/account-manager/first-level/settings",
   },
 ];
 

@@ -1,0 +1,17 @@
+  export const banks = [
+    { id: "access", name: "Access Bank" },
+    { id: "fidelity", name: "Fidelity Bank" },
+    { id: "firstbank", name: "First Bank of Nigeria" },
+    { id: "fcmb", name: "First City Monument Bank (FCMB)" },
+    { id: "gtbank", name: "Guaranty Trust Bank (GTBank)" },
+    { id: "keystone", name: "Keystone Bank" },
+    { id: "polaris", name: "Polaris Bank" },
+    { id: "stanbic", name: "Stanbic IBTC Bank" },
+    { id: "standardchartered", name: "Standard Chartered Bank" },
+    { id: "sterling", name: "Sterling Bank" },
+    { id: "union", name: "Union Bank of Nigeria" },
+    { id: "uba", name: "United Bank for Africa (UBA)" },
+    { id: "unity", name: "Unity Bank" },
+    { id: "wema", name: "Wema Bank" },
+    { id: "zenith", name: "Zenith Bank" },
+  ];

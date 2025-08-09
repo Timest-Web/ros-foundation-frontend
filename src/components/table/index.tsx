@@ -16,10 +16,11 @@ import {
   Cell,
 } from "react-aria-components";
 import { Button } from "../button";
-import { IoMdAdd } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";
 import { Pagination } from "./pagination";
 import { useRouter } from "next/navigation";
+import { IoAddOutline } from "react-icons/io5";
+import AddIcon from "../icons/AddIcon";
 
 export type ColumnDefinition<T> = {
   // The key can now be a generic string, as "action" is not a keyof the User object.
@@ -43,6 +44,7 @@ type CustomTableProps<T> = {
   pageLink: string;
   headerText?: string;
   subHeading?: string;
+  showAdd?: boolean;
 };
 
 export function CustomTable<T extends Record<string, any>>({
@@ -57,11 +59,12 @@ export function CustomTable<T extends Record<string, any>>({
   filterKey,
   pageLink,
   headerText,
-  subHeading
+  subHeading,
+  showAdd,
 }: CustomTableProps<T>) {
   const [localQuery, setLocalQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(0);
-  const [activeTab, setActiveTab] = useState("all");
+  const [activeTab, setActiveTab] = useState(filterTabs?.[0]?.key ?? "");
 
   const handleSearch = (value: string) => {
     setLocalQuery(value);
@@ -112,13 +115,15 @@ export function CustomTable<T extends Record<string, any>>({
               </SearchField>
             </div>
 
-            <Button
-              onPress={() => router.push(pageLink)}
-              className="w-48 h-[2.8rem] flex items-center justify-center gap-1"
-            >
-              <IoMdAdd />
-              Add a beneficiary
-            </Button>
+            {showAdd && (
+              <Button
+                onPress={() => router.push(pageLink)}
+                className="w-48 h-[2.8rem] flex items-center justify-center gap-1"
+              >
+                <AddIcon />
+                <p>Add a beneficiary</p>
+              </Button>
+            )}
           </section>
         </div>
       )}
@@ -155,7 +160,7 @@ export function CustomTable<T extends Record<string, any>>({
               <Column
                 key={String(col.key)}
                 isRowHeader={col.isRowHeader}
-                className="px-6 py-4 text-left text-sm font-semibold text-text-dark"
+                className="px-4 py-4 text-left text-sm font-semibold text-text-dark"
               >
                 {col.label}
               </Column>
@@ -167,7 +172,7 @@ export function CustomTable<T extends Record<string, any>>({
                 {columns.map((col) => (
                   <Cell
                     key={String(col.key)}
-                    className="px-6 py-4 text-sm text-text-dark"
+                    className="px-4 py-4 text-sm text-text-dark"
                   >
                     {col.render ? col.render(row) : (row as any)[col.key]}
                   </Cell>

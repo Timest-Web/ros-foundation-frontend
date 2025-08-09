@@ -80,6 +80,7 @@ export default function AccountManagerBeneficiariesView() {
         pageLink="beneficiaries/add-beneficiaries"
         headerText="Beneficiaries"
         subHeading="List of Beneficiaries"
+        showAdd={true}
       />
     </AccountManagerDashboardLayout>
   );

@@ -48,13 +48,13 @@ function CustomDateField({
       value={value}
       onChange={onChange}
       isDisabled={isDisabled}
-      className="flex flex-col gap-1"
+      className="flex flex-col"
     >
-      <Label className="px-2 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
+      <Label className="px-2 mb-2 text-text-dark block font-medium text-xs lg:text-sm font-plus_jakarta_sans">
         {label}
       </Label>
       <DateInput
-        className={`w-full border border-neutral-300 rounded-sm px-4 py-4 pr-14 text-text-dark focus:bg-white text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent data-[disabled]:bg-gray-200 data-[disabled]:cursor-not-allowed`}
+        className={`w-full border border-neutral-300 rounded-sm px-4 py-[1.08rem] pr-14 text-text-dark focus:bg-white text-xs lg:text-sm focus:outline-none focus:ring-1 focus:ring-primary-100 focus:border-transparent data-[disabled]:bg-gray-200 data-[disabled]:cursor-not-allowed`}
       >
         {(segment) => <DateSegment className={"uppercase"} segment={segment} />}
       </DateInput>
@@ -73,7 +73,7 @@ interface ControlledDateFieldProps<
   name: TName;
   label?: string;
   description?: string;
-  isDisabled?: boolean; // <-- Add isDisabled prop here
+  isDisabled?: boolean; 
 }
 
 export function ControlledDateField<
@@ -84,10 +84,10 @@ export function ControlledDateField<
   name,
   label,
   description,
-  isDisabled, // <-- Receive it here
+  isDisabled, 
 }: ControlledDateFieldProps<TFieldValues, TName>) {
   const {
-    field: { value, onChange }, // This `value` is a JS Date or string
+    field: { value, onChange }, 
     fieldState: { error },
   } = useController({
     control,

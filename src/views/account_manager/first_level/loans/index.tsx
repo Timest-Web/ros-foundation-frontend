@@ -5,17 +5,20 @@ import React, { useState } from "react";
 import { ColumnDefinition, CustomTable } from "@/components/table";
 import { ActionMenu } from "@/components/table/action";
 import AccountManagerDashboardLayout from "../../layout";
-import { mockDocuments as sampleDocs, DocumentRow } from "./data";
 import CheckMarkIcon from "@/components/icons/CheckMarkIcon";
-
-const userActionItems = [{ id: "view", label: "View Details" }];
+import {
+  mockDocuments as sampleDocs,
+  DocumentRow,
+} from "../verify_documents/data";
 
 const handleAction = (actionKey: React.Key, doc: DocumentRow) => {
   switch (actionKey) {
-    case "view":
-      console.log("VIEW action for user:", doc.firstName, doc.id);
+    case "approve":
+      console.log("APPROVE action for user:", doc.firstName, doc.id);
       break;
-
+    case "manage":
+      console.log("MANAGE action for user:", doc.firstName, doc.id);
+      break;
     default:
       console.warn("Unknown action:", actionKey);
   }
@@ -43,17 +46,24 @@ const columns: ColumnDefinition<DocumentRow>[] = [
   {
     key: "action",
     label: "Action",
-    render: (doc) => (
-      <ActionMenu
-        aria-label={`Actions for ${doc.firstName}`}
-        items={userActionItems}
-        onAction={(key) => handleAction(key, doc)}
-      />
-    ),
+    render: (doc) => {
+      const actionItems =
+        doc.status === "Verified"
+          ? [{ id: "manage", label: "Manage Approval" }]
+          : [{ id: "approve", label: "Approve Beneficiary" }];
+
+      return (
+        <ActionMenu
+          aria-label={`Actions for ${doc.firstName}`}
+          items={actionItems}
+          onAction={(key) => handleAction(key, doc)}
+        />
+      );
+    },
   },
 ];
 
-export default function AccountManagerVerifyDocumentsView() {
+export default function AccountManagerLoanView() {
   const [query, setQuery] = useState("");
   const [documents, setDocuments] = useState<DocumentRow[]>(sampleDocs);
 
@@ -66,14 +76,13 @@ export default function AccountManagerVerifyDocumentsView() {
         onSearch={setQuery}
         showSearch={true}
         filterTabs={[
-          { key: "all", label: "All Beneficiaries" },
-          { key: "Verified", label: "Verified Beneficiaries" },
-          { key: "Not Verified", label: "Non-Verified Beneficiaries" },
+          { key: "Not Verified", label: "Awaiting Approval" },
+          { key: "Verified", label: "Approved" },
         ]}
         filterKey="status"
-        pageLink="beneficiaries/add-beneficiaries"
-        headerText="Verify Documents"
-        subHeading="Screen and verify documents of Beneficiaries"
+        pageLink=""
+        headerText="Loans"
+        subHeading="Approve Grants and Loans to Beneficiaries"
       />
     </AccountManagerDashboardLayout>
   );
