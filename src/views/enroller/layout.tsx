@@ -1,17 +1,16 @@
 import React from "react";
 import DashboardLayout from "../layout";
 import UserIcon from "@/components/icons/UserIcon";
-import MoneyIcon from "@/components/icons/MoneyIcon";
-import SettingsIcon from "@/components/icons/SettingsIcon";
+import WomenIcon from "@/components/icons/WomenIcon";
 
 interface EnrollerDashboardLayoutProps {
   children: React.ReactNode;
 }
 
 const menuItem = [
-  { icon: <MoneyIcon />, text: "Home", href: "/enroller" },
-  { icon: <UserIcon />, text: "My Profile", href: "/enroller/profile" },
-  { icon: <SettingsIcon />, text: "Settings", href: "/enroller/settings" },
+  { icon: <UserIcon />, text: "Personal Loan Profile", href: "/enroller" },
+  { icon: <WomenIcon />, text: "Child Loan Profile", href: "/enroller/children" },
+  { icon: <UserIcon />, text: "Profile", href: "/enroller/profile" },
 ];
 
 export default function EnrollerDashboardLayout({

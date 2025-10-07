@@ -33,13 +33,21 @@ export default function DocumentUploadCard({
       <div
         className={clsx(
           "border border-neutral-300 p-4 lg:w-72 rounded-md flex flex-col gap-3 text-text-dark",
-          !className?.includes("h-") && "h-[14rem]", // default height if none passed
+          !className?.includes("h-") && "h-[14rem]",
           className
         )}
       >
         <h3 className="font-righteous text-text-dark">{headingText}</h3>
         <p className="font-plus_jakarta_sans text-xs">{subHeading}</p>
         {selectField}
+        {isDisabled && (
+          <div className="flex gap-1 justify-center mt-4">
+            <AttachIcon />
+            <p className="font-plus_jakarta_sans text-xs font-semibold  text-primary-100">
+              {selectedFileName}
+            </p>
+          </div>
+        )}
         {!isDisabled && hintText && (
           <p className="font-plus_jakarta_sans text-xs">
             <span className="font-semibold">Hint:</span> {hintText}
@@ -62,6 +70,7 @@ export default function DocumentUploadCard({
           </Button>
         </FileTrigger>
       )}
+
       {!isDisabled && footerText && (
         <p className="font-plus_jakarta_sans text-xs font-semibold text-text-dark mt-2">
           File format: PNG, JPEG, PDF*

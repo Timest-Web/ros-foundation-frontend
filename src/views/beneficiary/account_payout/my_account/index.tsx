@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
@@ -50,12 +51,11 @@ const columns: ColumnDefinition<any>[] = [
         </p>
       </section> */}
       <section className=" w-2/3">
-        <CustomTable
+        {/* <CustomTable
           columns={columns}
           data={bankAccounts}
           ariaLabel="Bank Accounts"
-          pageLink="/"
-        />
+        /> */}
       </section>
     </div>
   );
