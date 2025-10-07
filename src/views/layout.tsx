@@ -48,9 +48,9 @@ export default function DashboardLayout({
             </p>
           </Link>
         )}
-        <p className="w-10 h-10 p-1 rounded-full border border-neutral-300 text-black font-plus_jakarta_sans flex justify-center items-center">
+        {/* <p className="w-10 h-10 p-1 rounded-full border border-neutral-300 text-black font-plus_jakarta_sans flex justify-center items-center">
           B
-        </p>
+        </p> */}
         <div className="pt-2">
           <CustomPopover
             buttonContent={(isOpen) => (
@@ -106,7 +106,7 @@ function isLinkActive(pathname: string, href: string): boolean {
   if (href === "/") {
     return pathname === "/";
   }
-  return pathname === href || pathname.startsWith(href + "/");
+  return pathname === href;
 }
 
 function MenuItem(props: MenuItemProps) {
@@ -141,19 +141,23 @@ interface FormHeadingProps {
   subHeading?: string;
   spanText?: string;
   isBackButton?: boolean;
+  rightSlot?: React.ReactNode;
 }
 
 export function FormHeading(props: FormHeadingProps) {
   return (
-    <div className="mb-6">
-      {props.isBackButton && <BackButton />}
-      <h3 className="font-righteous text-2xl lg:text-4xl text-black">
-        {props.headerText}
-      </h3>
-      <p className="font-ar-one-sans text-black mt-2 lg:mt-3">
-        {props.subHeading}
-        <span className="text-accent-100">{props.spanText}</span>
-      </p>
+    <div className="mb-6 flex justify-between">
+      <div>
+        {props.isBackButton && <BackButton />}
+        <h3 className="font-righteous text-2xl lg:text-4xl text-black">
+          {props.headerText}
+        </h3>
+        <p className="font-ar-one-sans text-black mt-2 lg:mt-3">
+          {props.subHeading}
+          <span className="text-accent-100">{props.spanText}</span>
+        </p>
+      </div>
+      <div>{props.rightSlot}</div>
     </div>
   );
 }

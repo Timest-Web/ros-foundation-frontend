@@ -1,11 +1,9 @@
 import React from "react";
 import DashboardLayout from "../layout";
-import BoxIcon from "@/components/icons/BoxIcon";
-import UserIcon from "@/components/icons/UserIcon";
-import FileUpload from "@/components/icons/FileUploadIcon";
 import WomenIcon from "@/components/icons/WomenIcon";
 import PayoutIcon from "@/components/icons/PayoutIcon";
 import SettingsIcon from "@/components/icons/SettingsIcon";
+import UserIcon from "@/components/icons/UserIcon";
 
 interface BeneficiaryDashboardLayoutProps {
   children: React.ReactNode;
@@ -13,24 +11,24 @@ interface BeneficiaryDashboardLayoutProps {
 
 const menuItems = [
   {
-    icon: <BoxIcon />,
-    text: "Onboarding",
-    href: "/beneficiary/onboarding",
-  },
-  {
     icon: <UserIcon />,
-    text: "My Profile",
-    href: "/beneficiary/profile",
+    text: "Personal Loan Profile",
+    href: "/beneficiary/loan-profile",
   },
-  { icon: <FileUpload />, text: "Uploads", href: "/beneficiary/uploads" },
+  // {
+  //   icon: <UserIcon />,
+  //   text: "My Profile",
+  //   href: "/beneficiary/profile",
+  // },
+  // { icon: <FileUpload />, text: "Uploads", href: "/beneficiary/uploads" },
   {
     icon: <WomenIcon />,
-    text: "Children Account",
+    text: "Children Loan Profile",
     href: "/beneficiary/children-account",
   },
   {
     icon: <PayoutIcon />,
-    text: "Account & Payout",
+    text: "Loan & Payout",
     href: "/beneficiary/account-payout",
   },
   {

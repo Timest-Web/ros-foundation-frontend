@@ -25,7 +25,7 @@ const config: Config = {
         },
         accent: {
           100: "#FDA829",
-          200:"#00E57A"
+          200: "#00E57A",
         },
       },
     },

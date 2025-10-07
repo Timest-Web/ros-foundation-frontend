@@ -1,179 +1,62 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useMemo, useState } from "react";
-import {
-  FieldError,
-  Input,
-  Label,
-  SearchField,
-  Text,
-  Table,
-  TableHeader,
-  TableBody,
-  Row,
-  Column,
-  Cell,
-} from "react-aria-components";
-import { Button } from "../button";
-import { FiSearch } from "react-icons/fi";
-import { Pagination } from "./pagination";
-import { useRouter } from "next/navigation";
-import { IoAddOutline } from "react-icons/io5";
-import AddIcon from "../icons/AddIcon";
+import React from "react";
+import { Table, TableHeader, TableBody, Row, Column, Cell } from "react-aria-components";
+import { Pagination } from "./pagination"; 
+
 
 export type ColumnDefinition<T> = {
-  // The key can now be a generic string, as "action" is not a keyof the User object.
   key: string;
   label: string;
   isRowHeader?: boolean;
-  // The render function simply receives the entire row object.
   render?: (row: T) => React.ReactNode;
 };
 
+
 type CustomTableProps<T> = {
   columns: ColumnDefinition<T>[];
-  data: T[];
-  selectionMode?: "none" | "single" | "multiple";
+  data: T[]; 
   ariaLabel: string;
-  showSearch?: boolean;
-  onSearch?: (query: string) => void;
-  itemsPerPage?: number;
-  filterTabs?: { key: string; label: string }[];
-  filterKey?: keyof T;
-  pageLink: string;
-  headerText?: string;
-  subHeading?: string;
-  showAdd?: boolean;
+  currentPage: number;
+  pageCount: number;
+  itemsPerPage: number;
+  totalItems: number;
+  onPageChange: (page: number) => void;
 };
+
 
 export function CustomTable<T extends Record<string, any>>({
   columns,
   data,
-  selectionMode = "none",
   ariaLabel,
-  showSearch = false,
-  onSearch,
-  itemsPerPage = 5,
-  filterTabs,
-  filterKey,
-  pageLink,
-  headerText,
-  subHeading,
-  showAdd,
+  currentPage,
+  pageCount,
+  itemsPerPage,
+  totalItems,
+  onPageChange,
 }: CustomTableProps<T>) {
-  const [localQuery, setLocalQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(0);
-  const [activeTab, setActiveTab] = useState(filterTabs?.[0]?.key ?? "");
-
-  const handleSearch = (value: string) => {
-    setLocalQuery(value);
-    if (onSearch) onSearch(value);
-    setCurrentPage(0);
-  };
-
-  const offset = currentPage * itemsPerPage;
-
-  const filteredData = useMemo(() => {
-    return data.filter((item) => {
-      const queryMatch = Object.values(item).some((val) =>
-        String(val).toLowerCase().includes(localQuery.toLowerCase())
-      );
-
-      const tabMatch =
-        activeTab === "all" || (filterKey && item[filterKey] === activeTab);
-
-      return queryMatch && tabMatch;
-    });
-  }, [data, localQuery, activeTab, filterKey]);
-
-  const currentData = filteredData.slice(offset, offset + itemsPerPage);
-  const pageCount = Math.ceil(filteredData.length / itemsPerPage);
-
-  const router = useRouter();
-
+  
   return (
     <div>
-      {showSearch && (
-        <div className="flex justify-between mb-4">
-          <div className="flex flex-col gap-4">
-            <h3 className="font-righteous text-2xl lg:text-4xl text-black">
-              {headerText}
-            </h3>
-            <p className="font-ar-one-sans text-black">{subHeading}</p>
-          </div>
-
-          <section className="flex gap-4 pt-4">
-            <div className="relative w-80">
-              <SearchField aria-label="Search" onChange={handleSearch}>
-                <Input
-                  placeholder="Search “Type any keyword”"
-                  className="w-full border border-neutral-300 focus:outline-none px-10 py-3 rounded text-sm text-text-dark font-plus_jakarta_sans"
-                />
-                <FiSearch className="absolute left-3 top-[1.4rem] transform -translate-y-1/2 text-gray-500" />
-                <FieldError />
-              </SearchField>
-            </div>
-
-            {showAdd && (
-              <Button
-                onPress={() => router.push(pageLink)}
-                className="w-48 h-[2.8rem] flex items-center justify-center gap-1"
-              >
-                <AddIcon />
-                <p>Add a beneficiary</p>
-              </Button>
-            )}
-          </section>
-        </div>
-      )}
-
-      {filterTabs && (
-        <div className="mb-4 flex gap-2">
-          {filterTabs.map((tab) => (
-            <button
-              key={tab.key}
-              onClick={() => {
-                setActiveTab(tab.key);
-                setCurrentPage(0);
-              }}
-              className={`px-4 py-2 text-sm rounded ${
-                activeTab === tab.key
-                  ? "font-plus_jakarta_sans cursor-pointer border border-neutral-300 shadow p-2 font-semibold text-sm text-primary-100 text-center rounded-md"
-                  : "font-plus_jakarta_sans cursor-pointer text-text-dark font-semibold"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      )}
-
-      <div className="w-full h-[25rem] overflow-hidden font-plus_jakarta_sans space-y-4 border border-neutral-300 rounded-md">
-        <Table
-          aria-label={ariaLabel}
-          selectionMode={selectionMode}
-          className="w-full"
-        >
+      <div className="w-full min-h-[25rem] font-plus_jakarta_sans border border-neutral-300 rounded-md">
+        <Table aria-label={ariaLabel} className="w-full">
           <TableHeader>
             {columns.map((col) => (
               <Column
                 key={String(col.key)}
                 isRowHeader={col.isRowHeader}
-                className="px-4 py-4 text-left text-sm font-semibold text-text-dark"
+                className="px-4 py-4 text-left text-[13px] font-semibold text-text-dark"
               >
                 {col.label}
               </Column>
             ))}
           </TableHeader>
+          {/* Use a ternary to handle empty data within the table body */}
           <TableBody>
-            {currentData.map((row, rowIndex) => (
-              <Row key={offset + rowIndex}>
+            {data.map((row, rowIndex) => (
+              <Row key={rowIndex}>
                 {columns.map((col) => (
-                  <Cell
-                    key={String(col.key)}
-                    className="px-4 py-4 text-sm text-text-dark"
-                  >
+                  <Cell key={String(col.key)} className="px-4 py-4 text-xs text-text-dark">
                     {col.render ? col.render(row) : (row as any)[col.key]}
                   </Cell>
                 ))}
@@ -183,13 +66,14 @@ export function CustomTable<T extends Record<string, any>>({
         </Table>
       </div>
 
-      <div className="w-full">
+      {/* Pagination is always shown, but will be disabled if pageCount <= 1 */}
+      <div className="w-full mt-4">
         <Pagination
           currentPage={currentPage}
           pageCount={pageCount}
           itemsPerPage={itemsPerPage}
-          totalItems={filteredData.length}
-          onPageChange={(selected) => setCurrentPage(selected)}
+          totalItems={totalItems}
+          onPageChange={onPageChange}
         />
       </div>
     </div>

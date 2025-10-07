@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import React, { useState } from "react";
@@ -38,13 +39,12 @@ export default function EnrollerProfileForm() {
   return (
     <Form onSubmit={handleSubmit(onSubmit)} className="flex gap-2">
       <div className="flex flex-col gap-4">
-        <UploadCard
-          apiEndpoint=""
+        {/* <UploadCard
           headingText="Add a Profile picture"
           subHeading="Add a Profile picture if you wish, else not so important"
           acceptedFileTypes={['image/png', 'mage/jpg', 'image/jpeg']}
           isImage={true}
-        />
+        /> */}
         <DashboardCard
           headingText="Update your password"
           pageLink=""

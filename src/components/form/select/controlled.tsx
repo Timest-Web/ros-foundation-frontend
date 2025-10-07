@@ -26,7 +26,7 @@ import {
 } from "react-hook-form";
 import { IoChevronDown } from "react-icons/io5";
 
-interface MySelectProps<
+interface GeneralSelectProps<
   T extends object,
   TFieldValues extends FieldValues = FieldValues
 > extends Omit<
@@ -57,7 +57,7 @@ export function ControlledSelect<
   children,
   placeholder,
   ...selectProps
-}: MySelectProps<T, TFieldValues>) {
+}: GeneralSelectProps<T, TFieldValues>) {
   return (
     <Controller
       name={name}

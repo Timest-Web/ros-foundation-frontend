@@ -1,76 +1,132 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useMemo, useState } from "react";
-import { MenuItem } from "react-aria-components";
-import EnrollerDashboardLayout from "../layout";
-import { ColumnDefinition, CustomTable } from "@/components/table";
-import { users as sampleUsers, User } from "./sample";
-import { ActionMenu } from "@/components/table/action";
+import React, { useState, useMemo } from "react";
+import BeneficiaryDashboardLayout from "../layout";
+import { FormHeading } from "@/views/layout";
+import LoanView from "./loan";
+import EnrollerApplyForLoanView from "./apply";
+import { Button } from "@/components/button";
+import { CustomSearchField } from "@/components/search";
+import AddIcon from "@/components/icons/AddIcon";
+import { GeneralSelect, SelectItem } from "@/components/form/select";
+import { ManualTabs } from "@/components/tabs/manual";
 
-const userActionItems = [
-  { id: "edit", label: "Edit" },
-  { id: "view", label: "View" },
+const loanTypeOptions = [
+  { value: "all", label: "All" },
+  { value: "Personal Loan", label: "Personal Loan" },
+  { value: "Child Loan", label: "Child Loan" },
 ];
 
-const handleAction = (actionKey: React.Key, user: User) => {
-  switch (actionKey) {
-    case "edit":
-      console.log("EDIT action for user:", user.firstName, user.id);
-      // Logic to open edit modal or navigate
-      break;
-    case "view":
-      console.log("VIEW action for user:", user.firstName, user.id);
-      // Logic to navigate to user detail page
-      break;
-    default:
-      console.warn("Unknown action:", actionKey);
-  }
-};
-
-const columns: ColumnDefinition<User>[] = [
-  { key: "firstName", label: "First Name", isRowHeader: true },
-  { key: "secondName", label: "Second Name" },
-  { key: "phone", label: "Phone" },
-  { key: "email", label: "Email" },
-  { key: "address", label: "Address" },
-  {
-    key: "action",
-    label: "Action",
-    render: (user) => (
-      <ActionMenu
-        aria-label={`Actions for ${user.firstName}`}
-        items={userActionItems}
-        onAction={(key) => handleAction(key, user)}
-      />
-    ),
-  },
+const loanStatusOptions = [
+  { value: "all", label: "All" },
+  { value: "Pending", label: "Pending" },
+  { value: "Approved", label: "Approved" },
 ];
 
-export default function EnrollerBeneficiariesView() {
-  const [query, setQuery] = useState("");
-  const [users, setUsers] = useState<User[]>(sampleUsers);
+const monthOptions = [
+  { value: "all", label: "All" },
+  { value: "5", label: "May" },
+  { value: "6", label: "June" },
+];
 
-  const filteredUsers = useMemo(() => {
-    if (!query) return users;
-    const q = query.toLowerCase();
-    return users.filter((user) =>
-      Object.values(user).some((val) => String(val).toLowerCase().includes(q))
-    );
-  }, [query, users]);
+export default function EnrollerChildView() {
+  const [activeTab, setActiveTab] = useState("loan");
+  const [loanTypeFilter, setLoanTypeFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [monthFilter, setMonthFilter] = useState("all");
+
+  const activeFilters = useMemo(() => {
+    switch (activeTab) {
+      case "loan":
+        return (
+          <div className="flex gap-4">
+            <GeneralSelect
+              label="Loans Type"
+              placeholder="Select loan type"
+              items={loanTypeOptions}
+              selectedKey={loanTypeFilter}
+              onSelectionChange={(key) => setLoanTypeFilter(key as string)}
+              className=""
+            >
+              {(item) => <SelectItem id={item.value}>{item.label}</SelectItem>}
+            </GeneralSelect>
+            <GeneralSelect
+              label="Filter Loans by"
+              placeholder="Select status"
+              items={loanStatusOptions}
+              selectedKey={statusFilter}
+              onSelectionChange={(key) => setStatusFilter(key as string)}
+              className=""
+            >
+              {(item) => <SelectItem id={item.value}>{item.label}</SelectItem>}
+            </GeneralSelect>
+          </div>
+        );
+      case "track_payout":
+        return (
+          <GeneralSelect
+            label="Filter Payout by"
+            placeholder="Select month"
+            items={monthOptions}
+            selectedKey={monthFilter}
+            onSelectionChange={(key) => setMonthFilter(key as string)}
+            className="min-w-[200px]"
+          >
+            {(item) => <SelectItem id={item.value}>{item.label}</SelectItem>}
+          </GeneralSelect>
+        );
+      default:
+        return null;
+    }
+  }, [activeTab, loanTypeFilter, statusFilter, monthFilter]);
+
+  const tabData = [
+    {
+      id: "loan",
+      label: "Loans",
+      content: (
+        <LoanView loanTypeFilter={loanTypeFilter} statusFilter={statusFilter} />
+      ),
+    },
+    {
+      id: "apply",
+      label: "Apply for Loan",
+      content: <EnrollerApplyForLoanView />,
+    },
+  ];
 
   return (
-    <EnrollerDashboardLayout>
+    <BeneficiaryDashboardLayout>
       <div>
-        <CustomTable
-          columns={columns}
-          data={filteredUsers}
-          ariaLabel="Users"
-          onSearch={setQuery}
-          showSearch={true}
-          pageLink=""
+        <FormHeading
+          headerText="Personal Loan Profile"
+          subHeading={
+            activeTab === "loan"
+              ? "List of Beneficiaries"
+              : "Apply for a new loan"
+          }
+          rightSlot={
+            activeTab === "loan" ? (
+              <div className="flex gap-2">
+                <CustomSearchField
+                  className="w-72"
+                  placeholder="Type any keyword"
+                />
+                <Button className="w-[15rem] py-[0.5rem] text-sm flex justify-center items-center gap-2">
+                  <AddIcon /> <span>Start a Loan Application</span>
+                </Button>
+              </div>
+            ) : null
+          }
+        />
+        <ManualTabs
+          tabs={tabData}
+          activeTabId={activeTab}
+          onTabChange={setActiveTab}
+          rightSlot={activeFilters}
         />
       </div>
-    </EnrollerDashboardLayout>
+    </BeneficiaryDashboardLayout>
   );
 }
