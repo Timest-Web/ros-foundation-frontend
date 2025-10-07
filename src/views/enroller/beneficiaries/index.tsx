@@ -47,7 +47,6 @@ export default function EnrollerChildView() {
               items={loanTypeOptions}
               selectedKey={loanTypeFilter}
               onSelectionChange={(key) => setLoanTypeFilter(key as string)}
-              className=""
             >
               {(item) => <SelectItem id={item.value}>{item.label}</SelectItem>}
             </GeneralSelect>
@@ -57,7 +56,6 @@ export default function EnrollerChildView() {
               items={loanStatusOptions}
               selectedKey={statusFilter}
               onSelectionChange={(key) => setStatusFilter(key as string)}
-              className=""
             >
               {(item) => <SelectItem id={item.value}>{item.label}</SelectItem>}
             </GeneralSelect>

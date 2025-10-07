@@ -43,7 +43,7 @@ export default function BeneficiarySignInForm() {
     });
 
     if (res?.ok) {
-      router.push("/beneficiary/onboarding");
+      router.push("/beneficiary/loan-profile");
     } else {
       setErrorMessage("Invalid credentials. Please try again.");
     }
