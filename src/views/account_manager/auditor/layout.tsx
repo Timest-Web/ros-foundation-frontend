@@ -13,7 +13,7 @@ const menuItem = [
   {
     icon: <UserIcon />,
     text: "Personal Loan Profile",
-    href: "/account-manager/auditor/personal-loan",
+    href: "/account-manager/auditor",
   },
   {
     icon: <WomenIcon />,
