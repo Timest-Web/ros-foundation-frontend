@@ -8,13 +8,11 @@ interface FounderDashboardLayoutProps {
 }
 
 const menuItem = [
-
   {
     icon: <BatchIcon />,
     text: "Batching",
-    href: "/founder/batching",
+    href: "/founder",
   },
-
   {
     icon: <UserIcon />,
     text: "My Profile",

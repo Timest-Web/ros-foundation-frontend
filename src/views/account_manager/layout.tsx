@@ -16,7 +16,7 @@ const menuItem = [
   {
     icon: <UserIcon />,
     text: "Personal Loan Profile",
-    href: "/account-manager/first-level/personal-loan",
+    href: "/account-manager/first-level",
   },
   {
     icon: <WomenIcon />,

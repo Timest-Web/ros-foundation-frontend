@@ -12,7 +12,7 @@ const menuItem = [
   {
     icon: <BatchIcon />,
     text: "Batching",
-    href: "/finance-manager/batching",
+    href: "/finance-manager",
   },
 
   {
